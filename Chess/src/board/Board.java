@@ -15,6 +15,8 @@ public class Board {
 	private MailBox mailbox;
 	private AttackBoard whiteAttckBoard, blackAttckBoard;
 	
+	
+	//--------Konstruktor----------
 	public Board(){
 		
 		mailbox = new MailBox();	
@@ -22,10 +24,78 @@ public class Board {
 		whiteAttckBoard = new AttackBoard(this, ChessColor.WHITE);
 		blackAttckBoard = new AttackBoard(this, ChessColor.BLACK);
 		
-		updateAttackBoards();
-				
+		updateAttackBoards();				
 	}	
 	
+	public boolean whiteKingInCheck(){		
+		return blackAttckBoard.inCheck();
+	}
+	public boolean blackKingInCheck(){
+		return whiteAttckBoard.inCheck();
+	}
+	//-----------Move and Check-logic------------
+	
+	public void movePiece(int index, int moveTo){
+			
+		Piece piece = mailbox.getSquare(index).getPiece();
+				
+		if(blackKingInCheck()){
+			
+//			if(!escapeCheck()){
+//				System.out.println("checkmate, white won");
+//			}
+			
+		}else{
+			
+			if(piece.movement(moveTo)){
+				
+				mailbox.getSquare(moveTo).setPiece(mailbox.getSquare(index).getPiece());
+				mailbox.getSquare(index).setPiece(mailbox.getEmptyPiece());
+				piece.setSquare(getSquare(moveTo));
+				
+				mailbox.getSquare(index).setOccupied(false);
+				mailbox.getSquare(moveTo).setOccupied(true);
+				
+				updateAttackBoards();	
+				
+				//---------checkforcheck----------
+				if (getWAttackBoard().inCheck()) {
+					System.out.println("black king in check...");
+				}
+				if (getBAttackBoard().inCheck()) {
+					System.out.println("white king in check...");
+	
+				}
+					System.out.println("\nGiltligt drag");
+					
+			}else{
+				System.out.println("\nOgiltligt drag");
+			}			
+		}		
+	}
+		
+	public void updateAttackBoards(){
+		whiteAttckBoard.updateAttackSquares();
+		blackAttckBoard.updateAttackSquares();
+		
+		whiteAttckBoard.updateKingPosition();
+		blackAttckBoard.updateKingPosition();
+	}
+	
+	public void forceMove() {
+		
+		
+		
+	}
+		
+//	public void forceMovePiece(int index, int moveTo){
+//		Piece piece = mailbox.getSquare(moveTo).getPiece();
+//		mailbox.getSquare(moveTo).setPiece(mailbox.getSquare(index).getPiece());
+//		mailbox.getSquare(index).setPiece(piece);
+//		
+//	}
+	
+	//--------Get-Methods----------
 	public AttackBoard getWAttackBoard() {
 		return whiteAttckBoard;
 	}
@@ -34,20 +104,6 @@ public class Board {
 		return blackAttckBoard;
 	}
 
-	/**
-	 * Metoden retunerar den refarerade rutan
-	 * 
-	 * @param mailboxNbr En position i schackbrädet   
-	 * @return Square man refarerar till
-	 */
-	public Square getSquare(int mailboxNbr){
-		return mailbox.getSquare(mailboxNbr);
-	}
-	
-	public boolean getLegacy(int index){
-		return mailbox.getLegality(index);		
-	}	
-	
 	public Square getKingPosition(ChessColor color){
 		
 		Square[] boardSquares = mailbox.getSquareList();
@@ -59,46 +115,25 @@ public class Board {
 			}
 		}
 		return null;
-	}
-
-	public void movePiece(int index, int moveTo){
-		
-		Piece piece = mailbox.getSquare(index).getPiece();
-				
-		if(piece.movement(moveTo)){
-			
-			mailbox.getSquare(moveTo).setPiece(mailbox.getSquare(index).getPiece());
-			mailbox.getSquare(index).setPiece(new EmptyPiece(ChessColor.NEUTRAL));
-			piece.setSquare(getSquare(moveTo));
-			
-			mailbox.getSquare(index).setOccupied(false);
-			mailbox.getSquare(moveTo).setOccupied(true);
-			
-			updateAttackBoards();		
-			printEverything();
-			
-			if(getWAttackBoard().checkForCheck())
-				System.out.println("\nblack king in check...");
-			if(getBAttackBoard().checkForCheck())
-				System.out.println("\nwhite king in check...");
-			
-			System.out.println("\nGiltligt drag");
-			
-		}else{
-			System.out.println("\nOgiltligt drag");
-		}
+	}	
+	
+	public boolean getLegacy(int index){
+		return mailbox.getLegality(index);		
+	}	
+	/**
+	 * Metoden retunerar den refarerade rutan
+	 * 
+	 * @param mailboxNbr En position i schackbrädet   
+	 * @return Square man refarerar till
+	 */
+	public Square getSquare(int mailboxNbr){
+		return mailbox.getSquare(mailboxNbr);
 	}
 	
 	public Square[] getBoardSquares(){
 		return mailbox.getSquareList();
 	}
 	
-	public void forceMovePiece(int index, int moveTo){
-		Piece piece = mailbox.getSquare(moveTo).getPiece();
-		mailbox.getSquare(moveTo).setPiece(mailbox.getSquare(index).getPiece());
-		mailbox.getSquare(index).setPiece(piece);
-		
-	}
 	/**
 	 * Metoden retunerar vad för pjäs som står på den refarerade rutan
 	 * @param mailboxNbr Positionen för rutan
@@ -108,15 +143,7 @@ public class Board {
 		return mailbox.getSquare(mailboxNbr).getPiece().getPieceType().getPieceValue();
 	}
 	
-	public void updateAttackBoards(){
-		whiteAttckBoard.updateAttackSquares();
-		blackAttckBoard.updateAttackSquares();
-		
-		whiteAttckBoard.updateKingPosition();
-		blackAttckBoard.updateKingPosition();
-	}
-	
-	//--------Only print methods---------
+	//--------Print-methods---------
 	public void printBoard(){
 		System.out.println();		
 		mailbox.printboard();			
@@ -142,36 +169,36 @@ public class Board {
 		printSquareValues();
 	}
 	
-	
-	public static void main(String[] args) {
-		
-		Board board = new Board();
-		board.printEverything();
-		
-		Scanner scanner = new Scanner(System.in);
-		int stsq = 0, tosq = 0;
-		
-		while(true){
-			
-			System.out.println("\nSkriv in vad du vill flytta: t.ex. " + "0,16");
-			
-			if(scanner.hasNext("exit")){
-				System.out.println("closed");
-				break;
-			}
-			
-			String inputMove = scanner.nextLine();
-			String[] positions = inputMove.split(",");
-			
-			stsq = Integer.parseInt(positions[0]);
-			tosq = Integer.parseInt(positions[1]);
-			
-			board.movePiece(stsq, tosq);
-			board.printEverything();			
-			
-		}
-		
-	}
+	//--------Main---------
+//	public static void main(String[] args) {
+//		
+//		Board board = new Board();
+//		board.printEverything();
+//		
+//		Scanner scanner = new Scanner(System.in);
+//		int stsq = 0, tosq = 0;
+//		
+//		while(true){
+//			
+//			System.out.println("\nSkriv in vad du vill flytta: t.ex. " + "0,16");
+//			
+//			if(scanner.hasNext("exit")){
+//				System.out.println("closed");
+//				break;
+//			}
+//			
+//			String inputMove = scanner.nextLine();
+//			String[] positions = inputMove.split(",");
+//			
+//			stsq = Integer.parseInt(positions[0]);
+//			tosq = Integer.parseInt(positions[1]);
+//			
+//			board.movePiece(stsq, tosq);
+//			board.printEverything();			
+//			
+//		}
+//		
+//	}
 	
 	/*
 	 * kollar om den får flytta sig
@@ -184,5 +211,3 @@ public class Board {
 	}*/
 		
 }	 
-
-//�nnu mer tester
