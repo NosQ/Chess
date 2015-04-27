@@ -12,5 +12,5 @@ public class Bishop extends Piece{
 		super(PieceType.BISHOP, color);
 	}
 ///AHFUHSAUFHSA
-}
+}//iji
 //APA
