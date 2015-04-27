@@ -115,4 +115,4 @@ public class GraphicBoard extends JFrame {
 	
 }
 
-//från Daniel
+//från Daniels
