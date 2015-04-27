@@ -9,7 +9,7 @@ public class AttackBoard {
 	private Board board;
 	private ChessColor color;
 	private ChessColor kingColor;
-	private ArrayList<Square> attackSquares = new ArrayList<Square>();
+	private ArrayList<Square> attackSquares = new ArrayList<>();
 	private Square kingPosition;
 	private boolean inCheck = false;
 	
@@ -21,10 +21,10 @@ public class AttackBoard {
 	}
 	
 	public void kingColor(ChessColor color){
-		if(color.getColor() == ChessColor.WHITE.getColor()){
+		if(color.getColor() == 1){
 			kingColor = ChessColor.BLACK;
 		}
-		if(color.getColor() == ChessColor.BLACK.getColor()){
+		if(color.getColor() == 0){
 			kingColor = ChessColor.WHITE;
 		}
 		
@@ -47,7 +47,16 @@ public class AttackBoard {
 		}		
 	}
 	
-	public boolean checkForCheck(){
+	
+	public ArrayList<Square> getAttackSquares() {
+		return attackSquares;
+	}
+	
+	public ChessColor getKingColor(){
+		return kingColor;
+	}
+	
+	public boolean inCheck(){
 		
 		for(Square square : attackSquares){
 			
@@ -56,7 +65,13 @@ public class AttackBoard {
 			}
 		}		
 		return false;		
-	}	
+	}
+	
+//	public boolean checkMate() {
+//		
+//		
+//		
+//	}
 	
 	public void printAttackBoard(){
 		System.out.printf("\n" + color + "AttackSquares: \n");
@@ -66,5 +81,3 @@ public class AttackBoard {
 	}
 	
 }
-
-//enkelt test
