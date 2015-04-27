@@ -184,3 +184,5 @@ public class Board {
 	}*/
 		
 }	 
+
+//ännu mer tester
