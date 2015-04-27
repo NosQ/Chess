@@ -45,3 +45,4 @@ public class GraphicController {
 		grafik.updateDisplay();
 	}
 }
+// här skriver jag lite bajs

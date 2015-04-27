@@ -33,7 +33,7 @@ public class GraphicSquare extends JPanel {
 	
 	public void setPiece(Piece piece){
 		this.piece = piece;
-		String path = "/home/zvonimir/git/Chess/Chess/src/PiecePictures/";
+		String path = "C:/Users/Daniel/Desktop/Pjäser/";
 		if(piece.getColor() == ChessColor.WHITE) {
 		
 			switch (piece.getPieceType()) {
