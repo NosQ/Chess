@@ -60,18 +60,67 @@ public class Board {
 				
 				//---------checkforcheck----------
 				if (getWAttackBoard().inCheck()) {
-					System.out.println("black king in check...");
+					System.out.println("\nblack king in check...");
+					if(getWAttackBoard().inMate()) {
+						System.out.println("\nsvart i matt");
+					}
 				}
 				if (getBAttackBoard().inCheck()) {
 					System.out.println("white king in check...");
 	
 				}
-					System.out.println("\nGiltligt drag");
+					System.out.println("Giltligt drag");
 					
 			}else{
 				System.out.println("\nOgiltligt drag");
 			}			
 //		}		
+	}
+	
+	public boolean escapeCheck() {
+		return false;
+	}
+	
+	public boolean kingEscape(ChessColor color){
+		
+//		Square kingSquare = getSquare(getKingPosition(color).getValueNbr());
+//		
+//		ArrayList<Square> escapeSquare = new ArrayList<>();
+//		
+//		
+//		
+//		for(Square square : getSquare(getKingPosition(color).getValueNbr()).getPiece().getMoves().getPossibleSquares()) {
+//			
+//			for(Square attackSquare : whiteAttckBoard.getAttackSquares()) {
+//				
+//				if(square != attackSquare) {
+//					
+//					escapeSquare.add(square);
+//				//	break;
+//				}
+//			}
+//			
+//		} 
+//		
+//		for(int i = 0; i < escapeSquare.size(); i++) {
+//			Square s = escapeSquare.get(i);
+//			if(s == kingSquare) {
+//				return false;
+//			}
+//		}
+//		
+//		return true;
+		
+		
+		if(getWAttackBoard().inCheck()) {
+			
+			
+			
+			
+		}
+			
+		return false;
+		
 	}
 		
 	public void updateAttackBoards(){

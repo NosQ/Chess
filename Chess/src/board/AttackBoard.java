@@ -2,6 +2,7 @@ package board;
 
 import java.util.ArrayList;
 
+import piece.PieceType;
 import square.Square;
 
 public class AttackBoard {
@@ -10,6 +11,7 @@ public class AttackBoard {
 	private ChessColor color;
 	private ChessColor kingColor;
 	private ArrayList<Square> attackSquares = new ArrayList<>();
+	private ArrayList<Square> kingSquares = new ArrayList<>();
 	private Square kingPosition;
 	private boolean inCheck = false;
 	
@@ -55,17 +57,38 @@ public class AttackBoard {
 	public ChessColor getKingColor(){
 		return kingColor;
 	}
+	public void kingPossibleMoves(){
+		kingSquares.clear();
+		for(Square square : board.getBoardSquares()){
+			if(square.getPiece().getColor() != color && square.getPiece().getPieceType() == PieceType.KING){
+				kingSquares.addAll(square.getPiece().getMoves().getPossibleSquares());
+			}
+		}
+	}
 	
-	public boolean inCheck(){
-		
-		for(Square square : attackSquares){
-			
-			if(square.equals(kingPosition)){
+	public boolean inCheck() {
+		for (Square square : attackSquares) {
+			if(square.equals(kingPosition)) {
 				return true;
 			}
-		}		
-		return false;		
+		}
+		
+		return false;
 	}
+	
+	public boolean inMate(){
+		
+		kingPossibleMoves();
+		for (Square square : attackSquares) {
+			for (Square ksquare : kingSquares) {
+				if (square.equals(ksquare)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	
 //	public boolean checkMate() {
 //		
