@@ -13,3 +13,4 @@ public class Bishop extends Piece{
 	}
 ///AHFUHSAUFHSA
 }
+//APA
