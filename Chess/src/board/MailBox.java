@@ -16,9 +16,12 @@ public class MailBox {
 	private Square[] squares = new Square[120];
 	private MailBox64 mailbox64 = new MailBox64();	
 	
+	private EmptyPiece emtpyPiece;
+	
 	//-------Konsruktor---------
 	public MailBox() {
-
+		
+		emtpyPiece = new EmptyPiece(ChessColor.NEUTRAL);
 		initMailbox(squares);
 		
 	}
@@ -174,7 +177,7 @@ public class MailBox {
 	}
 	
 	private void initNeutralPieces(int i, int mbNr) {
-		squares[i] = new Square(this, true, mbNr, new EmptyPiece(ChessColor.NEUTRAL));	
+		squares[i] = new Square(this, true, mbNr, emtpyPiece);	
 		setSquareToPiece(i);
 	}
 	
@@ -185,6 +188,10 @@ public class MailBox {
 		if(piece.getPieceType() != PieceType.EMPTY){
 			squares[i].setOccupied(true);
 		}
+	}
+	
+	public EmptyPiece getEmptyPiece(){
+		return emtpyPiece;
 	}
 	
 	//-------Print Board, all pieces--------
