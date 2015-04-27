@@ -39,13 +39,13 @@ public class Board {
 			
 		Piece piece = mailbox.getSquare(index).getPiece();
 				
-		if(blackKingInCheck()){
-			
+//		if(blackKingInCheck()){
+//			
 //			if(!escapeCheck()){
 //				System.out.println("checkmate, white won");
 //			}
-			
-		}else{
+//			
+//		}else{
 			
 			if(piece.movement(moveTo)){
 				
@@ -71,7 +71,7 @@ public class Board {
 			}else{
 				System.out.println("\nOgiltligt drag");
 			}			
-		}		
+//		}		
 	}
 		
 	public void updateAttackBoards(){
