@@ -33,7 +33,7 @@ public class GraphicSquare extends JPanel {
 	
 	public void setPiece(Piece piece){
 		this.piece = piece;
-		
+		String path = "/home/zvonimir/git/Chess/Chess/src/PiecePictures/";
 		if(piece.getColor() == ChessColor.WHITE) {
 		
 			switch (piece.getPieceType()) {
@@ -42,22 +42,22 @@ public class GraphicSquare extends JPanel {
 				setIcon(null);
 				break;
 			case PAWN:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/wp.GIF");
+				setIcon(path+"wp.gif");
 				break;
 			case ROOK:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/wr.GIF");
+				setIcon(path+"wr.gif");
 				break;
 			case KNIGHT:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/wn.GIF");
+				setIcon(path+"wn.gif");
 				break;
 			case BISHOP:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/wb.GIF");
+				setIcon(path+"wb.gif");
 				break;
 			case QUEEN:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/wq.GIF");
+				setIcon(path+"wq.gif");
 				break;
 			case KING:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/wk.GIF");
+				setIcon(path+"wk.gif");
 				break;
 			}
 			
@@ -70,22 +70,22 @@ public class GraphicSquare extends JPanel {
 				setIcon(null);
 				break;
 			case PAWN:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/bp.GIF");
+				setIcon(path+"bp.gif");
 				break;
 			case ROOK:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/br.GIF");
+				setIcon(path+"br.gif");
 				break;
 			case KNIGHT:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/bn.GIF");
+				setIcon(path+"bn.gif");
 				break;
 			case BISHOP:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/bb.GIF");
+				setIcon(path+"bb.gif");
 				break;
 			case QUEEN:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/bq.GIF");
+				setIcon(path+"bq.gif");
 				break;
 			case KING:
-				setIcon("C:/Users/Daniel/Desktop/Pjäser/bk.GIF");
+				setIcon(path+"bk.gif");
 				break;
 			}
 
