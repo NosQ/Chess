@@ -55,11 +55,14 @@ public class Board {
 				updateAttackBoards();	
 				
 				//---------checkforcheck----------
-				if (getWAttackBoard().inCheck()) {
+				if (blackKingInCheck()==true) {
 					System.out.println("\nblack king in check...");
 					if(blackDefenceBoard.simulateCheck()==true){
 						System.out.println("GAME OVER BITCH");
+					}else{
+						System.out.println("inte schack matt ");
 					}
+					
 				}
 				else if (getBAttackBoard().inCheck()) {
 					System.out.println("white king in check...");
@@ -70,7 +73,6 @@ public class Board {
 			}else{
 				System.out.println("Ogiltligt drag");
 			}
-			System.out.println("drag klart");
 	}		
 	
 	

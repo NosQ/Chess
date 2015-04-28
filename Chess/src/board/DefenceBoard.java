@@ -15,16 +15,18 @@ public class DefenceBoard {
 	}
 	
 	public boolean simulateCheck(){
-		System.out.println("testar simulering för "+color);
+		System.out.println("testar simulering fï¿½r "+color);
 		for(Square sq :board.getBoardSquares()){
 			if(sq.getPiece().getColor() == color){
 				ArrayList<Square> possibleMoves = sq.getPiece().getMoves().getPossibleSquares();
 				int startIndex = sq.getValueNbr();
 				for(Square testSq : possibleMoves){
 					board.forceMovePiece(startIndex, testSq.getValueNbr());
-					if(board.blackKingInCheck() ==false){
+					board.updateAttackBoards();
+					System.out.println(board.blackKingInCheck());
+					if(board.blackKingInCheck() == false){
 						System.out.println("inte schack");
-						break;
+						return false;
 						}
 					else{
 						board.forceMovePiece(testSq.getValueNbr(), startIndex);
