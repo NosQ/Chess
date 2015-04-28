@@ -24,22 +24,19 @@ public class DefenceBoard {
 				System.out.println(sq[i].getPiece().getPieceType());
 				ArrayList<Square> possibleMoves = sq[i].getPiece().getMoves().getPossibleSquares();
 				int startIndex = sq[i].getValueNbr();
-				Iterator<Square> iter = possibleMoves.iterator();
-				while(iter.hasNext()){
-					int nextValue =iter.next().getValueNbr();
+				int z = 0;
+				while(z<possibleMoves.size()){
+					int nextValue = possibleMoves.get(z).getValueNbr();
 					board.forceMovePiece(startIndex, nextValue);
 					board.updateAttackBoards();
-					board.printBoard();
 					if(board.blackKingInCheck() == false){
 						board.forceMovePiece(nextValue, startIndex);
-						iter.remove();
 						return false;
 						}
 					else{
 						board.forceMovePiece(nextValue, startIndex);
-						System.out.println("Fortfrande schack");
 					}
-					
+					z++;
 				}
 			}
 			i++;
