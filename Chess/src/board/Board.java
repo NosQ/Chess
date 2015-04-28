@@ -14,6 +14,7 @@ public class Board {
 	
 	private MailBox mailbox;
 	private AttackBoard whiteAttckBoard, blackAttckBoard;
+	private DefenceBoard whiteDefenceBoard, blackDefenceBoard;
 	
 	
 	//--------Konstruktor----------
@@ -23,6 +24,8 @@ public class Board {
 		
 		whiteAttckBoard = new AttackBoard(this, ChessColor.WHITE);
 		blackAttckBoard = new AttackBoard(this, ChessColor.BLACK);
+		whiteDefenceBoard = new DefenceBoard(ChessColor.WHITE, this);
+		blackDefenceBoard = new DefenceBoard(ChessColor.BLACK, this);
 		
 		updateAttackBoards();				
 	}	
@@ -38,14 +41,7 @@ public class Board {
 	public void movePiece(int index, int moveTo){
 			
 		Piece piece = mailbox.getSquare(index).getPiece();
-				
-//		if(blackKingInCheck()){
-//			
-//			if(!escapeCheck()){
-//				System.out.println("checkmate, white won");
-//			}
-//			
-//		}else{
+		
 			
 			if(piece.movement(moveTo)){
 				
@@ -61,11 +57,11 @@ public class Board {
 				//---------checkforcheck----------
 				if (getWAttackBoard().inCheck()) {
 					System.out.println("\nblack king in check...");
-					if(getWAttackBoard().inMate()) {
-						System.out.println("svart i matt");
+					if(blackDefenceBoard.simulateCheck()==true){
+						System.out.println("GAME OVER BITCH");
 					}
 				}
-				if (getBAttackBoard().inCheck()) {
+				else if (getBAttackBoard().inCheck()) {
 					System.out.println("white king in check...");
 	
 				}
@@ -73,9 +69,10 @@ public class Board {
 					
 			}else{
 				System.out.println("Ogiltligt drag");
-			}			
-//		}		
-	}
+			}
+			System.out.println("drag klart");
+	}		
+	
 	
 	public boolean escapeCheck() {
 		return false;
@@ -130,19 +127,17 @@ public class Board {
 		whiteAttckBoard.updateKingPosition();
 		blackAttckBoard.updateKingPosition();
 	}
-	
-	public void forceMove() {
+
 		
-		
+	public void forceMovePiece(int index, int moveTo){
+		Piece piece = mailbox.getSquare(moveTo).getPiece();
+		mailbox.getSquare(moveTo).setPiece(mailbox.getSquare(index).getPiece());
+		mailbox.getSquare(index).setPiece(piece);
+		piece.setSquare(getSquare(moveTo));
+		mailbox.getSquare(index).setOccupied(false);
+		mailbox.getSquare(moveTo).setOccupied(true);
 		
 	}
-		
-//	public void forceMovePiece(int index, int moveTo){
-//		Piece piece = mailbox.getSquare(moveTo).getPiece();
-//		mailbox.getSquare(moveTo).setPiece(mailbox.getSquare(index).getPiece());
-//		mailbox.getSquare(index).setPiece(piece);
-//		
-//	}
 	
 	//--------Get-Methods----------
 	public AttackBoard getWAttackBoard() {

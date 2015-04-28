@@ -67,6 +67,7 @@ public class AttackBoard {
 	}
 	
 	public boolean inCheck() {
+		System.out.println("STARTAR INCHECK FÖR "+color);
 		for (Square square : attackSquares) {
 			if(square.equals(kingPosition)) {
 				return true;
