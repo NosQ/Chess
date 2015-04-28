@@ -62,7 +62,7 @@ public class Board {
 				if (getWAttackBoard().inCheck()) {
 					System.out.println("\nblack king in check...");
 					if(getWAttackBoard().inMate()) {
-						System.out.println("\nsvart i matt");
+						System.out.println("svart i matt");
 					}
 				}
 				if (getBAttackBoard().inCheck()) {
@@ -72,7 +72,7 @@ public class Board {
 					System.out.println("Giltligt drag");
 					
 			}else{
-				System.out.println("\nOgiltligt drag");
+				System.out.println("Ogiltligt drag");
 			}			
 //		}		
 	}

@@ -13,7 +13,7 @@ public class AttackBoard {
 	private ArrayList<Square> attackSquares = new ArrayList<>();
 	private ArrayList<Square> kingSquares = new ArrayList<>();
 	private Square kingPosition;
-	private boolean inCheck = false;
+//	private boolean inCheck = false;
 	
 	public AttackBoard(Board board, ChessColor color){
 		this.board = board;
@@ -79,14 +79,25 @@ public class AttackBoard {
 	public boolean inMate(){
 		
 		kingPossibleMoves();
+		updateAttackSquares();
+		printKingMoves();
 		for (Square square : attackSquares) {
 			for (Square ksquare : kingSquares) {
+			
 				if (square.equals(ksquare)) {
+		
 					return true;
 				}
 			}
 		}
+		
 		return false;
+	}
+	
+	public void printKingMoves() {
+		for(Square s : kingSquares) {
+			System.out.printf(s.getValueNbr() + ", ");
+		}
 	}
 	
 	
