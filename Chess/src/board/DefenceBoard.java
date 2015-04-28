@@ -1,6 +1,7 @@
 package board;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import square.Square;
 
@@ -16,26 +17,32 @@ public class DefenceBoard {
 	
 	public boolean simulateCheck(){
 		System.out.println("testar simulering f�r "+color);
-		for(Square sq :board.getBoardSquares()){
-			if(sq.getPiece().getColor() == color){
-				ArrayList<Square> possibleMoves = sq.getPiece().getMoves().getPossibleSquares();
-				int startIndex = sq.getValueNbr();
-				for(Square testSq : possibleMoves){
-					board.forceMovePiece(startIndex, testSq.getValueNbr());
+		Square[] sq = board.getBoardSquares();
+		int i = 0;
+		while(i<sq.length){
+			if(sq[i].getPiece().getColor() == color){
+				System.out.println(sq[i].getPiece().getPieceType());
+				ArrayList<Square> possibleMoves = sq[i].getPiece().getMoves().getPossibleSquares();
+				int startIndex = sq[i].getValueNbr();
+				Iterator<Square> iter = possibleMoves.iterator();
+				while(iter.hasNext()){
+					int nextValue =iter.next().getValueNbr();
+					board.forceMovePiece(startIndex, nextValue);
 					board.updateAttackBoards();
-					System.out.println(board.blackKingInCheck());
+					board.printBoard();
 					if(board.blackKingInCheck() == false){
-						System.out.println("inte schack");
+						board.forceMovePiece(nextValue, startIndex);
+						iter.remove();
 						return false;
 						}
 					else{
-						board.forceMovePiece(testSq.getValueNbr(), startIndex);
+						board.forceMovePiece(nextValue, startIndex);
 						System.out.println("Fortfrande schack");
 					}
-						
 					
 				}
 			}
+			i++;
 		}
 		
 	
