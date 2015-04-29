@@ -2,7 +2,9 @@ package piece;
 
 import java.util.ArrayList;
 
-import piece.pieces.Queen;
+import javax.swing.JOptionPane;
+
+import piece.pieces.*;
 import board.ChessColor;
 import square.Square;
 
@@ -139,13 +141,32 @@ public class MoveList {
 
 		}
 		
-		//-----------------Spawn a Queen---------------
+		//-----------------Spawn a new Piece---------------
 		if((piece.getSquareAt().getValueNbr() >= 0 && piece.getSquareAt().getValueNbr()  <= 7 && piece.getColor() == ChessColor.WHITE && piece.getPieceType() == PieceType.PAWN) || piece.getSquareAt().getValueNbr() >= 56 && piece.getSquareAt().getValueNbr()  <= 63 && piece.getColor() == ChessColor.BLACK && piece.getPieceType() == PieceType.PAWN){
-
-			Piece newQueen = new Queen(piece.getColor());
-			piece.getSquareAt().setPiece(newQueen);
-			newQueen.setSquare(piece.getSquareAt());
-
+			
+			Piece newPiece;
+			
+			int choice = Integer.parseInt(JOptionPane.showInputDialog("Ange vilken pjäs\n1. Drottning\n2. Torn\n3. Häst\n4. Löpare"));
+			
+			switch(choice) {
+			
+			case 1: newPiece = new Queen(piece.getColor());
+			piece.getSquareAt().setPiece(newPiece);
+			newPiece.setSquare(piece.getSquareAt()); break;
+			
+			case 2: newPiece = new Rook(piece.getColor());
+			piece.getSquareAt().setPiece(newPiece);
+			newPiece.setSquare(piece.getSquareAt()); break;
+			
+			case 3: newPiece = new Knight(piece.getColor());
+			piece.getSquareAt().setPiece(newPiece);
+			newPiece.setSquare(piece.getSquareAt()); break;
+			
+			case 4: newPiece = new Bishop(piece.getColor());
+			piece.getSquareAt().setPiece(newPiece);
+			newPiece.setSquare(piece.getSquareAt()); break;
+			
+			}
 		}
 
 	}
