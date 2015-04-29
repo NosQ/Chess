@@ -1,6 +1,8 @@
 package piece;
 
 import java.util.ArrayList;
+
+import piece.pieces.Queen;
 import board.ChessColor;
 import square.Square;
 
@@ -67,10 +69,10 @@ public class MoveList {
 		
 		int standsOn = piece.getSquareAt().getValueNbr();
 		
-		Square squareAhead = piece.getSquareAt().getBoard().getSquare(standsOn, 10);
+		Square squareAhead = piece.getSquareAt().getMailbox().getSquare(standsOn, 10);
 		
 		if (piece.getColor() == ChessColor.WHITE) {
-			squareAhead = piece.getSquareAt().getBoard().getSquare(standsOn, -10);
+			squareAhead = piece.getSquareAt().getMailbox().getSquare(standsOn, -10);
 		} 
 		
 		if(squareAhead.getValueNbr() != -1 && (!squareAhead.isOccupied() && squareAhead.getPiece().getColor() != piece.getColor())){
@@ -79,10 +81,10 @@ public class MoveList {
 			
 			// Denna sats ändrades så att man enbart kollar efter en bondes position istället för om den är flyttad.
 			if(piece.getSquareAt().getValueNbr() >= 8 && piece.getSquareAt().getValueNbr() <= 15 || piece.getSquareAt().getValueNbr() >= 48 && piece.getSquareAt().getValueNbr() <= 55){
-				Square squareAhead2 = piece.getSquareAt().getBoard().getSquare(standsOn, 20);
+				Square squareAhead2 = piece.getSquareAt().getMailbox().getSquare(standsOn, 20);
 				
 				if (piece.getColor() == ChessColor.WHITE) {
-					squareAhead2 = piece.getSquareAt().getBoard().getSquare(standsOn, -20);
+					squareAhead2 = piece.getSquareAt().getMailbox().getSquare(standsOn, -20);
 				}
 				
 				if(squareAhead2.getValueNbr() != -1 && (!squareAhead2.isOccupied() && squareAhead2.getPiece().getColor() != piece.getColor())){
@@ -90,55 +92,61 @@ public class MoveList {
 					
 				}			
 			}
+			
+		}
+
+		Square squareFromRightSide = null;
+		Square squareFromLeftSide = null;
+
+		// -----------PawnAttackRight-----------
+		if (piece.getColor() == ChessColor.WHITE) {
+			squareFromRightSide = piece.getSquareAt().getMailbox().getSquare(standsOn, -9);
+		}
+
+		else if (piece.getColor() == ChessColor.BLACK) {
+			squareFromRightSide = piece.getSquareAt().getMailbox().getSquare(standsOn, 9);
+		}
+
+		if ((isValidSquare(squareFromRightSide) && !isOccupiedByOwn(squareFromRightSide) && squareFromRightSide.getPiece().getPieceType() != PieceType.EMPTY) || isOccupiedByOpponent(squareFromRightSide)) {
+
+			if (isOccupiedByOpponent(squareFromRightSide)) {
+				possibleSquares.add(squareFromRightSide);
+
+			}
+
+		}
+
+		// -----------PawnAttackLeft-----------
+
+		if (piece.getColor() == ChessColor.WHITE) {
+			
+			squareFromLeftSide = piece.getSquareAt().getMailbox().getSquare(standsOn, -11);
+			
+		}
+
+		else if (piece.getColor() == ChessColor.BLACK) {
+			
+			squareFromLeftSide = piece.getSquareAt().getMailbox().getSquare(standsOn, 11);
+			
+		}
+
+		if ((isValidSquare(squareFromLeftSide) && !isOccupiedByOwn(squareFromLeftSide) && squareFromLeftSide.getPiece().getPieceType() != PieceType.EMPTY) || isOccupiedByOpponent(squareFromLeftSide)) {
+
+			if (isOccupiedByOpponent(squareFromLeftSide)) {
+				possibleSquares.add(squareFromLeftSide);
+
+			}
+
 		}
 		
-			Square squareFromRightSide = null;
-			Square squareFromLeftSide = null;
+		if(piece.getSquareAt().getValueNbr() >= 0 && piece.getSquareAt().getValueNbr()  <= 7 && piece.getColor() == ChessColor.WHITE && piece.getPieceType() == PieceType.PAWN){
 			
-			//-----------PawnAttackRight-----------
-			if(piece.getColor() == ChessColor.WHITE) {
-				squareFromRightSide = piece.getSquareAt().getBoard().getSquare(standsOn, -9);			
-			}
+			Piece newQueen = new Queen(piece.getColor());
+			piece.getSquareAt().setPiece(newQueen);
+			newQueen.setSquare(piece.getSquareAt());
 			
-			else if(piece.getColor() == ChessColor.BLACK) {
-				squareFromRightSide = piece.getSquareAt().getBoard().getSquare(standsOn, 9);
-			}
-			
-			if(( isValidSquare(squareFromRightSide) && !isOccupiedByOwn(squareFromRightSide) && squareFromRightSide.getPiece().getPieceType() != PieceType.EMPTY ) || isOccupiedByOpponent(squareFromRightSide) ){
-			
-				if ((isValidSquare(squareFromRightSide) && !isOccupiedByOwn(squareFromRightSide)) || isOccupiedByOpponent(squareFromRightSide)) {
+	}
 
-					if (isOccupiedByOpponent(squareFromRightSide)) {
-						possibleSquares.add(squareFromRightSide);
-					
-					} 
-
-				}//first inner if
-
-			}//outer if
-			
-			//-----------PawnAttackLeft-----------
-			
-			if(piece.getColor() == ChessColor.WHITE) {
-				squareFromLeftSide = piece.getSquareAt().getBoard().getSquare(standsOn, -11);			
-			}
-			
-			else if(piece.getColor() == ChessColor.BLACK) {
-				squareFromLeftSide = piece.getSquareAt().getBoard().getSquare(standsOn, 11);
-			}
-			
-			if(( isValidSquare(squareFromLeftSide) && !isOccupiedByOwn(squareFromLeftSide) && squareFromLeftSide.getPiece().getPieceType() != PieceType.EMPTY ) || isOccupiedByOpponent(squareFromLeftSide) ){
-			
-				if ((isValidSquare(squareFromLeftSide) && !isOccupiedByOwn(squareFromLeftSide)) || isOccupiedByOpponent(squareFromLeftSide)) {
-
-					if (isOccupiedByOpponent(squareFromLeftSide)) {
-						possibleSquares.add(squareFromLeftSide);
-					
-					} 
-				}//first inner if
-
-			}//outer if
-		
 	}
 	
 	private void rookMoves(){
@@ -151,7 +159,7 @@ public class MoveList {
 			
 			for(int i = 1; i < 8; i++ ){
 				
-				Square squareMvTo = piece.getSquareAt().getBoard().getSquare(standsOn, i * offset);
+				Square squareMvTo = piece.getSquareAt().getMailbox().getSquare(standsOn, i * offset);
 //				System.out.println(squareMvTo.isOccupied() + " " + squareMvTo.getValueNbr());
 						
 				//om ruta inte är tom OCH rutans pjäs färg inte är samma som denna pjäs färg.
@@ -179,7 +187,7 @@ public class MoveList {
 		
 		for(int offset : piece.getMoveType().getOffsets()){		
 				
-			Square squareMvTo = piece.getSquareAt().getBoard().getSquare(standsOn, offset);
+			Square squareMvTo = piece.getSquareAt().getMailbox().getSquare(standsOn, offset);
 			
 			if(( isValidSquare(squareMvTo) && !isOccupiedByOwn(squareMvTo) ) || isOccupiedByOpponent(squareMvTo) ){
 				
@@ -203,7 +211,7 @@ public class MoveList {
 			
 			for(int i = 1; i < 8; i++ ){
 				
-				Square squareMvTo = piece.getSquareAt().getBoard().getSquare(standsOn, i * offset);
+				Square squareMvTo = piece.getSquareAt().getMailbox().getSquare(standsOn, i * offset);
 				
 				if(( isValidSquare(squareMvTo) && !isOccupiedByOwn(squareMvTo) ) || isOccupiedByOpponent(squareMvTo) ){
 					
@@ -236,7 +244,7 @@ public class MoveList {
 		
 		for(int offset : piece.getMoveType().getOffsets()){			
 				
-				Square squareMvTo = piece.getSquareAt().getBoard().getSquare(standsOn, offset);
+				Square squareMvTo = piece.getSquareAt().getMailbox().getSquare(standsOn, offset);
 //				System.out.println(squareMvTo.isOccupied() + " " + squareMvTo.getValueNbr());
 						
 				//om ruta inte är tom OCH rutans pjäs färg inte är samma som denna pjäs färg.

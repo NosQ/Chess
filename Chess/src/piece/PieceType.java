@@ -20,4 +20,8 @@ public enum PieceType {
 		return pieceValue;
 	}
 	
+	public void setPieceValue(int pieceValue){
+		this.pieceValue = pieceValue;
+	}
+	
 }

@@ -30,7 +30,7 @@ public abstract class Piece {
 	 */
 	public boolean movement(int moveTo){
 		
-		Square square = squareAt.getBoard().getSquare(moveTo);
+		Square square = squareAt.getMailbox().getSquare(moveTo);
 		
 //		System.out.print("Du vill flytta till RUTA: " + square.getValueNbr() + " från RUTA: " +
 //				squareAt.getBoard().getSquare(squareAt.getValueNbr()).getValueNbr() + "\n");
