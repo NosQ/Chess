@@ -91,54 +91,51 @@ public class MoveList {
 				}			
 			}
 		}
-		
-			Square squareFromRightSide = null;
-			Square squareFromLeftSide = null;
-			
-			//-----------PawnAttackRight-----------
-			if(piece.getColor() == ChessColor.WHITE) {
-				squareFromRightSide = piece.getSquareAt().getBoard().getSquare(standsOn, -9);			
+
+		Square squareFromRightSide = null;
+		Square squareFromLeftSide = null;
+
+		// -----------PawnAttackRight-----------
+		if (piece.getColor() == ChessColor.WHITE) {
+			squareFromRightSide = piece.getSquareAt().getBoard().getSquare(standsOn, -9);
+		}
+
+		else if (piece.getColor() == ChessColor.BLACK) {
+			squareFromRightSide = piece.getSquareAt().getBoard().getSquare(standsOn, 9);
+		}
+
+		if ((isValidSquare(squareFromRightSide) && !isOccupiedByOwn(squareFromRightSide) && squareFromRightSide.getPiece().getPieceType() != PieceType.EMPTY) || isOccupiedByOpponent(squareFromRightSide)) {
+
+			if (isOccupiedByOpponent(squareFromRightSide)) {
+				possibleSquares.add(squareFromRightSide);
+
 			}
+
+		}
+
+		// -----------PawnAttackLeft-----------
+
+		if (piece.getColor() == ChessColor.WHITE) {
 			
-			else if(piece.getColor() == ChessColor.BLACK) {
-				squareFromRightSide = piece.getSquareAt().getBoard().getSquare(standsOn, 9);
+			squareFromLeftSide = piece.getSquareAt().getBoard().getSquare(standsOn, -11);
+			
+		}
+
+		else if (piece.getColor() == ChessColor.BLACK) {
+			
+			squareFromLeftSide = piece.getSquareAt().getBoard().getSquare(standsOn, 11);
+			
+		}
+
+		if ((isValidSquare(squareFromLeftSide) && !isOccupiedByOwn(squareFromLeftSide) && squareFromLeftSide.getPiece().getPieceType() != PieceType.EMPTY) || isOccupiedByOpponent(squareFromLeftSide)) {
+
+			if (isOccupiedByOpponent(squareFromLeftSide)) {
+				possibleSquares.add(squareFromLeftSide);
+
 			}
-			
-			if(( isValidSquare(squareFromRightSide) && !isOccupiedByOwn(squareFromRightSide) && squareFromRightSide.getPiece().getPieceType() != PieceType.EMPTY ) || isOccupiedByOpponent(squareFromRightSide) ){
-			
-				if ((isValidSquare(squareFromRightSide) && !isOccupiedByOwn(squareFromRightSide)) || isOccupiedByOpponent(squareFromRightSide)) {
 
-					if (isOccupiedByOpponent(squareFromRightSide)) {
-						possibleSquares.add(squareFromRightSide);
-					
-					} 
+		}
 
-				}//first inner if
-
-			}//outer if
-			
-			//-----------PawnAttackLeft-----------
-			
-			if(piece.getColor() == ChessColor.WHITE) {
-				squareFromLeftSide = piece.getSquareAt().getBoard().getSquare(standsOn, -11);			
-			}
-			
-			else if(piece.getColor() == ChessColor.BLACK) {
-				squareFromLeftSide = piece.getSquareAt().getBoard().getSquare(standsOn, 11);
-			}
-			
-			if(( isValidSquare(squareFromLeftSide) && !isOccupiedByOwn(squareFromLeftSide) && squareFromLeftSide.getPiece().getPieceType() != PieceType.EMPTY ) || isOccupiedByOpponent(squareFromLeftSide) ){
-			
-				if ((isValidSquare(squareFromLeftSide) && !isOccupiedByOwn(squareFromLeftSide)) || isOccupiedByOpponent(squareFromLeftSide)) {
-
-					if (isOccupiedByOpponent(squareFromLeftSide)) {
-						possibleSquares.add(squareFromLeftSide);
-					
-					} 
-				}//first inner if
-
-			}//outer if
-		
 	}
 	
 	private void rookMoves(){
