@@ -90,7 +90,8 @@ public class MoveList {
 					
 				}			
 			}
-			
+		}
+		
 			Square squareFromRightSide = null;
 			Square squareFromLeftSide = null;
 			
@@ -137,7 +138,7 @@ public class MoveList {
 				}//first inner if
 
 			}//outer if
-		}//absolut outer if	
+		
 	}
 	
 	private void rookMoves(){
