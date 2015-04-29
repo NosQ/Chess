@@ -16,37 +16,34 @@ public class DefenceBoard {
 	}
 	
 	public boolean simulateCheck(){
-		System.out.println("testar simulering f�r "+color);
+		System.out.println("testar simulering f�r " + color);
 		Square[] sq = board.getBoardSquares();
 		int i = 0;
-		while(i<sq.length){
-			if(sq[i].getPiece().getColor() == color){
+		while (i < sq.length) {
+			if (sq[i].getPiece().getColor() == color) {
 				System.out.println(sq[i].getPiece().getPieceType());
 				ArrayList<Square> possibleMoves = sq[i].getPiece().getMoves().getPossibleSquares();
 				int startIndex = sq[i].getValueNbr();
 				int z = 0;
-				while(z<possibleMoves.size()){
+				while (z < possibleMoves.size()) {
 					int nextValue = possibleMoves.get(z).getValueNbr();
 					board.forceMovePiece(startIndex, nextValue);
 					board.updateAttackBoards();
-					if(board.blackKingInCheck() == false){
+					if (board.blackKingInCheck() == false) {
 						board.forceMovePiece(nextValue, startIndex);
 						return false;
-						}
-					else{
+					} else {
 						board.forceMovePiece(nextValue, startIndex);
 					}
-					z++;
+					z += i;
 				}
 			}
 			i++;
 		}
-		
-	
-		
+
 		System.out.println("SIMULERING KLAR");
 		return true;
-		
+
 	}
 
 }
