@@ -71,4 +71,11 @@ public abstract class Piece {
 		return possibleMoves;
 
 	}
+	public void printPossibleMoves(){
+		System.out.println(pieceType.name() + ": ");
+		for(Square sq : possibleMoves.getPossibleSquares()){
+			System.out.printf(sq.getValueNbr() + ", ");
+		}
+		System.out.println();
+	}
 }

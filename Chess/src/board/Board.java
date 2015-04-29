@@ -75,53 +75,6 @@ public class Board {
 			}
 	}		
 	
-	
-	public boolean escapeCheck() {
-		return false;
-	}
-	
-	public boolean kingEscape(ChessColor color){
-		
-//		Square kingSquare = getSquare(getKingPosition(color).getValueNbr());
-//		
-//		ArrayList<Square> escapeSquare = new ArrayList<>();
-//		
-//		
-//		
-//		for(Square square : getSquare(getKingPosition(color).getValueNbr()).getPiece().getMoves().getPossibleSquares()) {
-//			
-//			for(Square attackSquare : whiteAttckBoard.getAttackSquares()) {
-//				
-//				if(square != attackSquare) {
-//					
-//					escapeSquare.add(square);
-//				//	break;
-//				}
-//			}
-//			
-//		} 
-//		
-//		for(int i = 0; i < escapeSquare.size(); i++) {
-//			Square s = escapeSquare.get(i);
-//			if(s == kingSquare) {
-//				return false;
-//			}
-//		}
-//		
-//		return true;
-		
-		
-		if(getWAttackBoard().inCheck()) {
-			
-			
-			
-			
-		}
-			
-		return false;
-		
-	}
-		
 	public void updateAttackBoards(){
 		whiteAttckBoard.updateAttackSquares();
 		blackAttckBoard.updateAttackSquares();
@@ -214,46 +167,5 @@ public class Board {
 		printAttackBoards();
 		printSquareValues();
 	}
-	
-	//--------Main---------
-//	public static void main(String[] args) {
-//		
-//		Board board = new Board();
-//		board.printEverything();
-//		
-//		Scanner scanner = new Scanner(System.in);
-//		int stsq = 0, tosq = 0;
-//		
-//		while(true){
-//			
-//			System.out.println("\nSkriv in vad du vill flytta: t.ex. " + "0,16");
-//			
-//			if(scanner.hasNext("exit")){
-//				System.out.println("closed");
-//				break;
-//			}
-//			
-//			String inputMove = scanner.nextLine();
-//			String[] positions = inputMove.split(",");
-//			
-//			stsq = Integer.parseInt(positions[0]);
-//			tosq = Integer.parseInt(positions[1]);
-//			
-//			board.movePiece(stsq, tosq);
-//			board.printEverything();			
-//			
-//		}
-//		
-//	}
-	
-	/*
-	 * kollar om den får flytta sig
-	 * och returnerar true eller false
-	 */
-	/*public boolean ifAllowedMovement(int index, int moveTo){
-		Piece piece = mailbox[mailbox64[index]].getPiece();
-		return piece.movement(index, moveTo);
-	
-	}*/
-		
-}	 
+
+}	
