@@ -35,7 +35,7 @@ public class DefenceBoard {
 					} else {
 						board.forceMovePiece(nextValue, startIndex);
 					}
-					z += i;
+					z++;
 				}
 			}
 			i++;
