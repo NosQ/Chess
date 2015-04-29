@@ -73,7 +73,6 @@ public class MoveList {
 			squareAhead = piece.getSquareAt().getBoard().getSquare(standsOn, -10);
 		} 
 		
-//		if(piece.isMoved() == false){
 		if(squareAhead.getValueNbr() != -1 && (!squareAhead.isOccupied() && squareAhead.getPiece().getColor() != piece.getColor())){
 			
 			possibleSquares.add(squareAhead);
@@ -90,9 +89,55 @@ public class MoveList {
 					possibleSquares.add(squareAhead2);
 					
 				}			
-			} 			
+			}
 			
-		}			
+			Square squareFromRightSide = null;
+			Square squareFromLeftSide = null;
+			
+			//-----------PawnAttackRight-----------
+			if(piece.getColor() == ChessColor.WHITE) {
+				squareFromRightSide = piece.getSquareAt().getBoard().getSquare(standsOn, -9);			
+			}
+			
+			else if(piece.getColor() == ChessColor.BLACK) {
+				squareFromRightSide = piece.getSquareAt().getBoard().getSquare(standsOn, 9);
+			}
+			
+			if(( isValidSquare(squareFromRightSide) && !isOccupiedByOwn(squareFromRightSide) && squareFromRightSide.getPiece().getPieceType() != PieceType.EMPTY ) || isOccupiedByOpponent(squareFromRightSide) ){
+			
+				if ((isValidSquare(squareFromRightSide) && !isOccupiedByOwn(squareFromRightSide)) || isOccupiedByOpponent(squareFromRightSide)) {
+
+					if (isOccupiedByOpponent(squareFromRightSide)) {
+						possibleSquares.add(squareFromRightSide);
+					
+					} 
+
+				}//first inner if
+
+			}//outer if
+			
+			//-----------PawnAttackLeft-----------
+			
+			if(piece.getColor() == ChessColor.WHITE) {
+				squareFromLeftSide = piece.getSquareAt().getBoard().getSquare(standsOn, -11);			
+			}
+			
+			else if(piece.getColor() == ChessColor.BLACK) {
+				squareFromLeftSide = piece.getSquareAt().getBoard().getSquare(standsOn, 11);
+			}
+			
+			if(( isValidSquare(squareFromLeftSide) && !isOccupiedByOwn(squareFromLeftSide) && squareFromLeftSide.getPiece().getPieceType() != PieceType.EMPTY ) || isOccupiedByOpponent(squareFromLeftSide) ){
+			
+				if ((isValidSquare(squareFromLeftSide) && !isOccupiedByOwn(squareFromLeftSide)) || isOccupiedByOpponent(squareFromLeftSide)) {
+
+					if (isOccupiedByOpponent(squareFromLeftSide)) {
+						possibleSquares.add(squareFromLeftSide);
+					
+					} 
+				}//first inner if
+
+			}//outer if
+		}//absolut outer if	
 	}
 	
 	private void rookMoves(){

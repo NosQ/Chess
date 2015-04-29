@@ -10,7 +10,7 @@ public class MoveType {
 			offsets = new int[]{};
 		}		
 		if (pieceType == PieceType.PAWN){
-			offsets = new int[]{10, 9, 11};
+			offsets = new int[]{10, 9, 11, -9, -11};
 		}
 		if (pieceType == PieceType.ROOK) {
 			offsets = new int[]{10, -10, 1, -1};
