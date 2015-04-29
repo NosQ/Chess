@@ -139,6 +139,7 @@ public class MoveList {
 
 		}
 		
+		//-----------------Spawn a Queen---------------
 		if((piece.getSquareAt().getValueNbr() >= 0 && piece.getSquareAt().getValueNbr()  <= 7 && piece.getColor() == ChessColor.WHITE && piece.getPieceType() == PieceType.PAWN) || piece.getSquareAt().getValueNbr() >= 56 && piece.getSquareAt().getValueNbr()  <= 63 && piece.getColor() == ChessColor.BLACK && piece.getPieceType() == PieceType.PAWN){
 
 			Piece newQueen = new Queen(piece.getColor());
