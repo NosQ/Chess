@@ -10,7 +10,7 @@ import piece.pieces.EmptyPiece;
 
 public class Square {
 	
-	private final MailBox board;
+	private final MailBox mailbox;
 	private final boolean illegal;
 	private final int valueNbr;
 	private Piece piece;
@@ -23,7 +23,7 @@ public class Square {
 	
 	//-----Legal Square------
 	public Square(MailBox board, boolean legality, int valueNbr, Piece piece){
-		this.board = board;
+		this.mailbox = board;
 		this.illegal = legality;
 		this.valueNbr = valueNbr;		
 		this.piece = piece;
@@ -52,7 +52,7 @@ public class Square {
 		this.piece = piece;
 	}
 	
-	public MailBox getBoard(){
-		return board;
+	public MailBox getMailbox(){
+		return mailbox;
 	}
 }
