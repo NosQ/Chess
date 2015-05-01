@@ -7,16 +7,28 @@ import javax.swing.JOptionPane;
 import piece.pieces.*;
 import board.ChessColor;
 import square.Square;
-
+/**
+ * Klassen hanterar rörelsemönster för de olika pjäserna 
+ * @author Daniel
+ *
+ */
 public class MoveList {
 	
 	private ArrayList<Square> possibleSquares = new ArrayList<Square>();
 	private Piece piece;
 	
+	/**
+	 * Konstruktor som tar emot en pjäs vid instansiering.
+	 * @param piece Pjäsen som tas emot
+	 */
 	public MoveList(Piece piece){		
 		this.piece = piece;
 	}
 	
+	/**
+	 * Metoden kollar efter vilken pjäs som blev vald och utför följande
+	 * algoritmer för varje pjästyp.
+	 */
 	public void genPossibleMoves(){
 		
 		switch (piece.getPieceType()){
@@ -51,6 +63,8 @@ public class MoveList {
 			break;
 		}		
 	}
+	
+	// ----------------------Rörelsealgoritmer för pjäser---------------------
 	
 	private void pawnMoves(){		
 		
@@ -170,7 +184,6 @@ public class MoveList {
 			for(int i = 1; i < 8; i++ ){
 				
 				Square squareMvTo = piece.getSquareAt().getMailbox().getSquare(standsOn, i * offset);
-//				System.out.println(squareMvTo.isOccupied() + " " + squareMvTo.getValueNbr());
 						
 				//om ruta inte är tom OCH rutans pjäs färg inte är samma som denna pjäs färg.
 				if(( isValidSquare(squareMvTo) && !isOccupiedByOwn(squareMvTo) ) || isOccupiedByOpponent(squareMvTo) ){
@@ -255,7 +268,6 @@ public class MoveList {
 		for(int offset : piece.getMoveType().getOffsets()){			
 				
 				Square squareMvTo = piece.getSquareAt().getMailbox().getSquare(standsOn, offset);
-//				System.out.println(squareMvTo.isOccupied() + " " + squareMvTo.getValueNbr());
 						
 				//om ruta inte är tom OCH rutans pjäs färg inte är samma som denna pjäs färg.
 				if(( isValidSquare(squareMvTo) && !isOccupiedByOwn(squareMvTo) ) || isOccupiedByOpponent(squareMvTo) ){
@@ -265,7 +277,7 @@ public class MoveList {
 				else{
 					continue;
 				}			
-		}//end outer for-loop	
+		}
 	}
 	
 	private boolean isValidSquare(Square squareMvTo){
