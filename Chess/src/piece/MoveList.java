@@ -22,43 +22,31 @@ public class MoveList {
 		switch (piece.getPieceType()){
 			
 		case PAWN: 	
-//			System.out.println("bonne startpos: " + piece.getSquareAt().getValueNbr());
 			pawnMoves();
-//			printPossibleMoves();
 			break; 
 			
 		case ROOK:
-//			System.out.println("torn startpos: " + piece.getSquareAt().getValueNbr());
 			rookMoves();
-//			printPossibleMoves();
 			break;
 			
 		case KNIGHT:
-//			System.out.println("hästpolle startpos: " + piece.getSquareAt().getValueNbr());
 			knightMoves();
-//			printPossibleMoves();
 			break;
 			
 		case BISHOP:
-//			System.out.println("löpare startpos: " + piece.getSquareAt().getValueNbr());
 			bishopMoves();
-//			printPossibleMoves();
 			break;
 		
 		case QUEEN:
-//			System.out.println("drottning startpos: " + piece.getSquareAt().getValueNbr());
 			queenMoves();
-//			printPossibleMoves();
 			break;
 			
 		case EMPTY:
 			break;
 			
 		case KING:
-//			System.out.println("kungen startpos: " + piece.getSquareAt().getValueNbr());
 			kingMoves();
-//			printPossibleMoves();
-			break;	
+			break;
 		default:
 			break;
 		}		
