@@ -263,5 +263,33 @@ public class MailBox {
 			}// for-loop end	
 			
 		}
+		
+	public void printPiecesSquare(){
+			
+			for (int i = 0; i < squares.length; i++) {
+				
+				//---Formaterar brädet---
+				if(i % 10 == 0){
+					System.out.println();
+				}
+				
+				//-----Skriver ut de värden de illegala rutorna har.-------
+				if (i < 20 || i > 100 || (i % 10 == 0) || (i % 10 == 9)) {
+					
+					System.out.printf(""); 
+					
+				}else {	//----Skriver ut vilka pjäser som står på vilka rutor.--------
+					
+					System.out.println("Ruta: " + squares[i].getValueNbr() + " står pjäsen: " + squares[i].getPiece().getColor() +
+							" " + squares[i].getPiece().getPieceType());
+					
+					System.out.println(squares[i].getPiece().getColor() + " " + squares[i].getPiece().getPieceType() +
+							" står på rutan: " + squares[i].getPiece().getSquareAt().getValueNbr());
+				
+					System.out.println();
+				}			
+
+			}// for-loop end				
+		}
 
 }

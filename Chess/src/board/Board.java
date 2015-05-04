@@ -161,6 +161,10 @@ public class Board {
 		whiteAttckBoard.printAttackBoard();
 		blackAttckBoard.printAttackBoard();
 	}
+	public void printPiecesSquare(){
+		mailbox.printPiecesSquare();
+	}
+	
 	public void printEverything(){
 		printBoard();
 		printSquaresOccupied();
