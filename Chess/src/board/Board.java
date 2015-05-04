@@ -16,7 +16,6 @@ public class Board {
 	private AttackBoard whiteAttckBoard, blackAttckBoard;
 	private DefenceBoard whiteDefenceBoard, blackDefenceBoard;
 	
-	
 	//--------Konstruktor----------
 	public Board(){
 		
@@ -55,9 +54,13 @@ public class Board {
 				updateAttackBoards();	
 				
 				//---------checkforcheck----------
-				if (blackKingInCheck()==true) {
+				if (blackKingInCheck() == true) {
+					
 					System.out.println("\nblack king in check...");
-					if(blackDefenceBoard.simulateCheck()==true){
+					blackDefenceBoard.generateEscapeSquares();
+					blackDefenceBoard.printEscapeSquares();
+					
+					if(blackDefenceBoard.isEmpty()){						
 						System.out.println("GAME OVER BITCH");
 					}else{
 						System.out.println("inte schack matt ");
@@ -91,8 +94,9 @@ public class Board {
 		piece.setSquare(getSquare(moveTo));
 		mailbox.getSquare(index).setOccupied(false);
 		mailbox.getSquare(moveTo).setOccupied(true);
-		
 	}
+	
+	
 	
 	//--------Get-Methods----------
 	public AttackBoard getWAttackBoard() {
@@ -141,6 +145,35 @@ public class Board {
 	public int pieceOnSquare(int mailboxNbr){
 		return mailbox.getSquare(mailboxNbr).getPiece().getPieceType().getPieceValue();
 	}
+	
+	//--------Print-methods DOWN!!!---------
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//--------Print-methods---------
 	public void printBoard(){
