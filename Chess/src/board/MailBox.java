@@ -37,6 +37,7 @@ public class MailBox {
 	public Square getSquare(int mailboxNbr){		
 		return squares[mailbox64.getValue(mailboxNbr)];		
 	}
+	
 	//Kan returnera en Ilegal ruta
 	public Square getSquare(int mailboxNbr, int offset){
 		return squares[mailbox64.getValue(mailboxNbr) + offset];	

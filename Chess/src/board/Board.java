@@ -88,10 +88,17 @@ public class Board {
 
 		
 	public void forceMovePiece(int index, int moveTo){
-		Piece piece = mailbox.getSquare(moveTo).getPiece();
+		
+		Piece pieceMvTo = mailbox.getSquare(moveTo).getPiece();
+		Piece pieceBackup = pieceMvTo;
+		
+		//Sätter moveToSquare pjäs till squareAts pjäs.
 		mailbox.getSquare(moveTo).setPiece(mailbox.getSquare(index).getPiece());
-		mailbox.getSquare(index).setPiece(piece);
-		piece.setSquare(getSquare(moveTo));
+		
+		mailbox.getSquare(index).setPiece(pieceMvTo);
+		
+		pieceMvTo.setSquare(getSquare(moveTo));
+		
 		mailbox.getSquare(index).setOccupied(false);
 		mailbox.getSquare(moveTo).setOccupied(true);
 	}

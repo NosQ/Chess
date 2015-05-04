@@ -7,7 +7,7 @@ import piece.Piece;
 import square.Square;
 
 public class DefenceBoard {
-
+    
 	private ChessColor color;
 	private Board board;
 	private ArrayList<Square> escapeSquares = new ArrayList<Square>();
@@ -18,7 +18,7 @@ public class DefenceBoard {
 	}
 	
 	public void generateEscapeSquares(){
-		
+		boolean inCheck = true;
 		escapeSquares.clear();
 		Square[] boardSquares = board.getBoardSquares();
 		
@@ -37,18 +37,18 @@ public class DefenceBoard {
 					Square sqMv = piece.getMoves().getPossibleSquares().get(sqMvNr);
 					
 					board.forceMovePiece(sqAt.getValueNbr(), sqMv.getValueNbr());					
-					board.updateAttackBoards();
-					
+					board.updateAttackBoards();					
+					inCheck = board.blackKingInCheck();
 					
 					board.printBoard();										
 					System.out.println("Black King inCheck =  " + board.getWAttackBoard().inCheck());
 					
 					//Om kungen INTE är i schack
-					if (board.blackKingInCheck() == false) {
+					if (inCheck == false) {
 						
-						escapeSquares.add(sqMv);
-						
+						escapeSquares.add(sqMv);						
 						board.forceMovePiece(sqMv.getValueNbr(), sqAt.getValueNbr());
+						break;
 					} else {
 						board.forceMovePiece(sqMv.getValueNbr(), sqAt.getValueNbr());
 					}
