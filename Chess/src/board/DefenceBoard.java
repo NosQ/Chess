@@ -3,88 +3,163 @@ package board;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import piece.Piece;
 import square.Square;
 
 public class DefenceBoard {
 
 	private ChessColor color;
 	private Board board;
-
+	private ArrayList<Square> escapeSquares = new ArrayList<Square>();
+	
 	public DefenceBoard(ChessColor color, Board board) {
 		this.color = color;
 		this.board = board;
 	}
-
-	public boolean simulateCheck() {
-		System.out.println("testar simulering f�r " + color);
-		Square[] squares = board.getBoardSquares();
-		int i = 0;
-		//för alla rutor i brädet
-		while (i < squares.length) {
+	
+	public void generateEscapeSquares(){
+		
+		escapeSquares.clear();
+		Square[] boardSquares = board.getBoardSquares();
+		
+		for(int sqNr = 0; sqNr < boardSquares.length; sqNr++){
 			
-			if (squares[i].getPiece().getColor() == color) {
-				// System.out.println(squares[i].getPiece().getPieceType());
-				ArrayList<Square> possibleMoves = squares[i].getPiece().getMoves().getPossibleSquares();
+			Piece piece = board.getSquare(sqNr).getPiece();
+			Square sqAt = piece.getSquareAt();
+			
+			
+			if (piece.getColor() == color) {
 				
-				int startIndex = squares[i].getValueNbr();
-				squares[i].getPiece().printPossibleMoves();
+				piece.printPossibleMoves();
 				
-				int z = 0;
-				//för alla moves 
-				while (z < possibleMoves.size()) {
+				for(int sqMvNr = 0; sqMvNr < piece.getMoves().getPossibleSquares().size(); sqMvNr++){
 					
-					int nextValue = possibleMoves.get(z).getValueNbr();
-					board.forceMovePiece(startIndex, nextValue);
+					Square sqMv = piece.getMoves().getPossibleSquares().get(sqMvNr);
+					
+					board.forceMovePiece(sqAt.getValueNbr(), sqMv.getValueNbr());					
 					board.updateAttackBoards();
-					board.printBoard();
-
+					
+					
+					board.printBoard();										
+					System.out.println("Black King inCheck =  " + board.getWAttackBoard().inCheck());
+					
+					//Om kungen INTE är i schack
 					if (board.blackKingInCheck() == false) {
-						board.forceMovePiece(nextValue, startIndex);
+						
+						escapeSquares.add(sqMv);
+						
+						board.forceMovePiece(sqMv.getValueNbr(), sqAt.getValueNbr());
+					} else {
+						board.forceMovePiece(sqMv.getValueNbr(), sqAt.getValueNbr());
+					}
+				}
+				
+			}
+		}
+		
+	}
+	
+	public boolean isEmpty(){
+		return escapeSquares.isEmpty();
+	}
+	
+	public ArrayList<Square> getEscapeSquares(){
+		return escapeSquares;
+	}
+	public void printEscapeSquares(){
+		System.out.print("escapeSquares: ");
+		for(Square sq : escapeSquares){
+			System.out.printf(sq.getValueNbr() + ",");
+		}
+		System.out.println();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ public boolean simulateCheck() {
+		
+		boolean inCheck = true;
+		
+		System.out.println("testing simulation for " + color);
+		Square[] boardSquares = board.getBoardSquares();
+		
+		//för alla rutor i brädet
+		for (int sqNr = 0; sqNr < boardSquares.length; sqNr++) {
+			
+			if (boardSquares[sqNr].getPiece().getColor() == color) {
+				
+//				ArrayList<Square> possibleMoves = boardSquares[sqNr].getPiece().getMoves().getPossibleSquares();
+				System.out.println("antal drag = "+ possibleMoves.size());
+				
+				int pieceStartIndex = boardSquares[sqNr].getValueNbr();
+				boardSquares[sqNr].getPiece().printPossibleMoves();
+				
+				//för alla moves 
+				for (int possSqNr = 0; possSqNr < possibleMoves.size(); possSqNr++) {
+					
+					System.out.println("lol " + possSqNr);
+					int pieceNextSq = possibleMoves.get(possSqNr).getValueNbr();
+					
+					//flyttar pjäsen till nästa possible square
+					board.forceMovePiece(pieceStartIndex, pieceNextSq);
+					
+					board.updateAttackBoards();
+					
+					board.printBoard();					
+					System.out.println("Black King inCheck =  " + board.getWAttackBoard().inCheck());
+					
+					//Om kungen INTE är i schack
+					if (board.blackKingInCheck() == false) {
+						
+						board.forceMovePiece(pieceNextSq, pieceStartIndex);
 						return false;
 					} else {
-						board.forceMovePiece(nextValue, startIndex);
+						board.forceMovePiece(pieceNextSq, pieceStartIndex);
 					}
-					z++;
 				}
 			}
-			i++;
 		}
 		System.out.println("SIMULERING KLAR");
 		return true;
-//		System.out.println("testar simulering f�r " + color);
-//		Square[] squares = board.getBoardSquares();
-//
-//		ArrayList<Square> possibleMoves = new ArrayList<>();
-//		
-//		for (Square square : board.getBoardSquares()) {
-//
-//			if (square.getPiece().getColor() == color) {
-//				// System.out.println(squares[i].getPiece().getPieceType());
-//			    possibleMoves = square.getPiece().getMoves().getPossibleSquares();
-//			    
-//				int startIndex = square.getValueNbr();
-//				square.getPiece().printPossibleMoves();
-//
-//				for (Square possibleMove : temp) {
-//					
-//					int nextValue = possibleMove.getValueNbr();
-//
-//					board.forceMovePiece(startIndex, nextValue);
-//					board.updateAttackBoards();
-//					board.printBoard();
-//
-//					if (board.blackKingInCheck() == false) {
-//						board.forceMovePiece(nextValue, startIndex);
-//						return false;
-//					} else {
-//						board.forceMovePiece(nextValue, startIndex);
-//					}
-//				}//second for-loop
-//			}//first if
-//		}//first for-loop
-//			System.out.println("SIMULERING KLAR");
-//			return true;
-//
-//		}
 	}
-}
+ 
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

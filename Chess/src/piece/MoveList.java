@@ -144,7 +144,7 @@ public class MoveList {
 		}
 		
 		//-----------------Spawn a new Piece---------------
-		if((piece.getSquareAt().getValueNbr() >= 0 && piece.getSquareAt().getValueNbr()  <= 7 && piece.getColor() == ChessColor.WHITE && piece.getPieceType() == PieceType.PAWN) || piece.getSquareAt().getValueNbr() >= 56 && piece.getSquareAt().getValueNbr()  <= 63 && piece.getColor() == ChessColor.BLACK && piece.getPieceType() == PieceType.PAWN){
+		/*if((piece.getSquareAt().getValueNbr() >= 0 && piece.getSquareAt().getValueNbr()  <= 7 && piece.getColor() == ChessColor.WHITE && piece.getPieceType() == PieceType.PAWN) || piece.getSquareAt().getValueNbr() >= 56 && piece.getSquareAt().getValueNbr()  <= 63 && piece.getColor() == ChessColor.BLACK && piece.getPieceType() == PieceType.PAWN){
 			
 			Piece newPiece;
 			
@@ -169,7 +169,7 @@ public class MoveList {
 			newPiece.setSquare(piece.getSquareAt()); break;
 			
 			}
-		}
+		}*/
 
 	}
 	
