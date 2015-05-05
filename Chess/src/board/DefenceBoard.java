@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import piece.Piece;
+import piece.PieceType;
 import square.Square;
 
 public class DefenceBoard {
@@ -36,21 +37,53 @@ public class DefenceBoard {
 					
 					Square sqMv = piece.getMoves().getPossibleSquares().get(sqMvNr);
 					
-					board.forceMovePiece(sqAt.getValueNbr(), sqMv.getValueNbr());					
-					board.updateAttackBoards();					
+					//För att fixa bugg:445
+					Piece pieceBackup = sqMv.getPiece();
+					
+					System.out.println("pieceBackup = " + pieceBackup.getPieceType());
+					
+					//Om rutan i attackradie inte är en tom ruta, så gör den tom.
+					if (sqMv.getPiece().getPieceType() != PieceType.EMPTY){
+						sqMv.setPiece(sqMv.getMailbox().getEmptyPiece());
+						
+						sqMv.setOccupied(false);
+					}
+					
+					board.forceMovePiece(sqAt, sqMv);	
+					sqAt.setOccupied(false);
+					sqMv.setOccupied(true);
+					
+					board.updateAttackBoards();			
+					
 					inCheck = board.blackKingInCheck();
 					
-					board.printBoard();										
-					System.out.println("Black King inCheck =  " + board.getWAttackBoard().inCheck());
+					board.printBoard();	
+					
+					System.out.println("first forcePieceMove ");
+					board.printSquaresOccupied();
+					System.out.println("Black King inCheck =  " + inCheck);
 					
 					//Om kungen INTE är i schack
 					if (inCheck == false) {
 						
-						escapeSquares.add(sqMv);						
-						board.forceMovePiece(sqMv.getValueNbr(), sqAt.getValueNbr());
-						break;
+						escapeSquares.add(sqMv);
+	
+						sqAt.setPiece(pieceBackup);
+//						sqAt.setOccupied(true);
+						
+						board.forceMovePiece(sqMv, sqAt);
+						
+						System.out.println("reverse forcePieceMove ");
+						board.printSquaresOccupied();
 					} else {
-						board.forceMovePiece(sqMv.getValueNbr(), sqAt.getValueNbr());
+						
+						sqAt.setPiece(pieceBackup);
+//						sqAt.setOccupied(true);
+//						sqMv.setOccupied(false);
+						board.forceMovePiece(sqMv, sqAt);
+						
+						System.out.println("reverse forcePieceMove ");
+						board.printSquaresOccupied();
 					}
 				}
 				

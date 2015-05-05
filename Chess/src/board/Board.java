@@ -86,7 +86,7 @@ public class Board {
 		blackAttckBoard.updateKingPosition();
 	}
 
-		
+	/*//Fungerar enbart om man bytar till en tom ruta. 	
 	public void forceMovePiece(int index, int moveTo){
 		
 		Piece pieceMvTo = mailbox.getSquare(moveTo).getPiece();
@@ -101,8 +101,24 @@ public class Board {
 		
 		mailbox.getSquare(index).setOccupied(false);
 		mailbox.getSquare(moveTo).setOccupied(true);
-	}
+	}*/
 	
+	//Fungerar enbart om man bytar till en tom ruta. 	
+		public void forceMovePiece(Square startSquare, Square endSquare){
+			
+			Piece pieceMvTo = endSquare.getPiece();
+			
+			//Sätter moveToSquare pjäs till squareAts pjäs.
+			endSquare.setPiece(startSquare.getPiece());
+			
+			startSquare.setPiece(pieceMvTo);
+			
+			pieceMvTo.setSquare(endSquare);
+			
+//			startSquare.setOccupied(false);
+//			endSquare.setOccupied(true);
+			
+		}
 	
 	
 	//--------Get-Methods----------
