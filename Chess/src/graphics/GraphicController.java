@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import board.Board;
 
 public class GraphicController {
+	
 	private Board chessB;
 	private int move = 0;
 	private int moveIndex;
@@ -45,4 +46,4 @@ public class GraphicController {
 		grafik.updateDisplay();
 	}
 }
-// här skriver jag lite bajs
+

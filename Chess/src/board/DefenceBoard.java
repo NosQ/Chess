@@ -9,6 +9,7 @@ import square.Square;
 
 public class DefenceBoard {
     
+	private boolean inCheck = true;
 	private ChessColor color;
 	private Board board;
 	private ArrayList<Square> escapeSquares = new ArrayList<Square>();
@@ -19,47 +20,44 @@ public class DefenceBoard {
 	}
 	
 	public void generateEscapeSquares(){
-		boolean inCheck = true;
+		
 		escapeSquares.clear();
 		Square[] boardSquares = board.getBoardSquares();
 		
+		//För alla rutor i spelet.
 		for(int sqNr = 0; sqNr < boardSquares.length; sqNr++){
 			
 			Piece piece = board.getSquare(sqNr).getPiece();
-			Square sqAt = piece.getSquareAt();
-			
+			Square sqAt = piece.getSquareAt();			
 			
 			if (piece.getColor() == color) {
 				
 				piece.printPossibleMoves();
 				
+				//För alla rutor i pjäsens possibleMoves.
 				for(int sqMvNr = 0; sqMvNr < piece.getMoves().getPossibleSquares().size(); sqMvNr++){
 					
 					Square sqMv = piece.getMoves().getPossibleSquares().get(sqMvNr);
 					
 					//För att fixa bugg:445
-					Piece pieceBackup = sqMv.getPiece();
-					
+					Piece pieceBackup = sqMv.getPiece();					
 					System.out.println("pieceBackup = " + pieceBackup.getPieceType());
 					
 					//Om rutan i attackradie inte är en tom ruta, så gör den tom.
-					if (sqMv.getPiece().getPieceType() != PieceType.EMPTY){
-						sqMv.setPiece(sqMv.getMailbox().getEmptyPiece());
-						
-						sqMv.setOccupied(false);
+					if (sqMv.getPiece().getPieceType() != PieceType.EMPTY){						
+						sqMv.setPiece(sqMv.getMailbox().getEmptyPiece());						
 					}
 					
-					board.forceMovePiece(sqAt, sqMv);	
-					sqAt.setOccupied(false);
-					sqMv.setOccupied(true);
-					
+					board.forceMovePiece(sqAt, sqMv);						
 					board.updateAttackBoards();			
+					board.printAttackBoards();
+					System.out.println("\nKungens Ruta: " + board.getKingPosition(ChessColor.BLACK).getValueNbr());
 					
+					//kollar efter schack vid simul-drag
 					inCheck = board.blackKingInCheck();
 					
-					board.printBoard();	
-					
-					System.out.println("first forcePieceMove ");
+					board.printBoard();						
+					System.out.println("First forcePieceMove ");
 					board.printSquaresOccupied();
 					System.out.println("Black King inCheck =  " + inCheck);
 					
@@ -69,20 +67,25 @@ public class DefenceBoard {
 						escapeSquares.add(sqMv);
 	
 						sqAt.setPiece(pieceBackup);
-//						sqAt.setOccupied(true);
 						
 						board.forceMovePiece(sqMv, sqAt);
+						
+						if(sqMv.getPiece().getPieceType() != PieceType.EMPTY){
+							sqMv.setOccupied(true);
+						}
 						
 						System.out.println("reverse forcePieceMove ");
 						board.printSquaresOccupied();
+						
 					} else {
 						
 						sqAt.setPiece(pieceBackup);
-//						sqAt.setOccupied(true);
-//						sqMv.setOccupied(false);
 						board.forceMovePiece(sqMv, sqAt);
 						
-						System.out.println("reverse forcePieceMove ");
+						if(sqMv.getPiece().getPieceType() != PieceType.EMPTY)
+							sqMv.setOccupied(true);
+						
+						System.out.println("\nreverse forcePieceMove ");
 						board.printSquaresOccupied();
 					}
 				}

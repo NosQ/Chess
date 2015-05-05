@@ -9,30 +9,11 @@ public class AttackBoard {
 	
 	private Board board;
 	private ChessColor color;
-	private ChessColor kingColor;
 	private ArrayList<Square> attackSquares = new ArrayList<>();
-	private Square kingPosition;
 	
 	public AttackBoard(Board board, ChessColor color){
 		this.board = board;
 		this.color = color;
-		updateKingPosition();
-		kingColor(color);
-	}
-	
-	public void kingColor(ChessColor color){
-		if(color.getColor() == 1){
-			kingColor = ChessColor.BLACK;
-		}
-		if(color.getColor() == 0){
-			kingColor = ChessColor.WHITE;
-		}
-		
-	}
-	
-	public void updateKingPosition(){
-		
-		kingPosition = board.getKingPosition(kingColor);
 	}
 	
 	public void updateAttackSquares(){
@@ -51,19 +32,6 @@ public class AttackBoard {
 		return attackSquares;
 	}
 	
-	public ChessColor getKingColor(){
-		return kingColor;
-	}
-		
-	public boolean inCheck() {
-		for (Square square : attackSquares) {
-			if(square.equals(kingPosition)) {
-				return true;
-			}
-		}		
-		return false;
-	}
-		
 	public void printAttackBoard(){
 		System.out.printf("\n" + color + "AttackSquares: \n");
 		for(Square square : attackSquares ){

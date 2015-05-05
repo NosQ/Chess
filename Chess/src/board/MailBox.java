@@ -208,7 +208,7 @@ public class MailBox {
 				//-----Skriver ut de värden de illegala rutorna har.-------
 				if (i < 20 || i > 100 || (i % 10 == 0) || (i % 10 == 9)) {
 					
-					System.out.printf("%2d,", squares[i].getValueNbr()); //dåligt namn
+//					System.out.printf("%2d,", squares[i].getValueNbr()); //dåligt namn
 					
 				}else {	//----Skriver ut pjäsernas värde som står på de lagliga rutorna--------
 					
@@ -232,7 +232,7 @@ public class MailBox {
 				//-----Skriver ut de värden de illegala rutorna har.-------
 				if (i < 20 || i > 100 || (i % 10 == 0) || (i % 10 == 9)) {
 					
-					System.out.printf("%2d,", squares[i].getValueNbr()); //dåligt namn
+//					System.out.printf("%2d,", squares[i].getValueNbr()); //dåligt namn
 					
 				}else {	//----Skriver ut pjäsernas värde som står på de lagliga rutorna--------
 					
@@ -254,7 +254,7 @@ public class MailBox {
 				//-----Skriver ut de värden de illegala rutorna har.-------
 				if (i < 20 || i > 100 || (i % 10 == 0) || (i % 10 == 9)) {
 					
-					System.out.printf("%2d,", squares[i].getValueNbr()); //dåligt namn
+//					System.out.printf("%2d,", squares[i].getValueNbr()); //dåligt namn
 					
 				}else {	//----Skriver ut pjäsernas värde som står på de lagliga rutorna--------
 					
