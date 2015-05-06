@@ -16,6 +16,7 @@ public class Board {
 	private MailBox mailbox;
 	private AttackBoard whiteAttckBoard, blackAttckBoard;
 	private DefenceBoard whiteDefenceBoard, blackDefenceBoard;
+	private boolean isMate;
 	
 	//--------Konstruktor----------
 	public Board(){		
@@ -87,6 +88,7 @@ public class Board {
 					
 					if(blackDefenceBoard.isEmpty()){						
 						System.out.println("GAME OVER BITCH, Black lost");
+						setMate(true);
 					}
 					else{
 						System.out.println("inte schack matt ");
@@ -100,6 +102,7 @@ public class Board {
 					
 					if(whiteDefenceBoard.isEmpty()){						
 						System.out.println("GAME OVER BITCH, White lost");
+						setMate(true);
 					}
 					else{
 						System.out.println("inte schack matt ");
@@ -134,7 +137,15 @@ public class Board {
 			
 			startSquare.setOccupied(false);
 			endSquare.setOccupied(true);
-		}	
+		}
+	
+	public void setMate(boolean isMate) {
+		this.isMate = isMate;
+	}
+	
+	public boolean isMate() {
+		return isMate;
+	}
 	
 	//--------Get-Methods----------
 		

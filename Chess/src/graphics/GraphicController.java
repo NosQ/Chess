@@ -19,47 +19,49 @@ public class GraphicController {
 	}
 	
 	public void movePiece(int ruta){
-		if(move == 0){
-			moveIndex = ruta;
-			move++;
-			}
-		
-		else if(move == 1){
-			if(chessB.getSquare(moveIndex).getPiece().getColor()==ChessColor.BLACK && bturn == true){
-				if(chessB.movePiece(moveIndex, ruta) ==false && bturn ==true){
-					move = 0;
-					viewer.changePiece(moveIndex, ruta);
-					moveIndex = 0;
-				}
-				else{
-					move = 0;
-					viewer.changePiece(moveIndex, ruta);
-					moveIndex = 0;
-					setBTurn(false);
-					setWTurn(true);
-			}
-			}
-			else if(chessB.getSquare(moveIndex).getPiece().getColor()==ChessColor.WHITE && wturn == true){
-				if(chessB.movePiece(moveIndex, ruta) == false && wturn == true){
-					move = 0;
-					viewer.changePiece(moveIndex, ruta);
-					moveIndex = 0;
-				}
-				else{
-					move = 0;
-					viewer.changePiece(moveIndex, ruta);
-					moveIndex = 0;
-					setBTurn(true);
-					setWTurn(false);
+		if (!chessB.isMate()) {
 			
-		}
-
-	}
-			else{
-				move=0;
-				System.out.println("inte din tur");
+			if (move == 0) {
+				moveIndex = ruta;
+				move++;
 			}
-}
+
+			else if (move == 1) {
+				if (chessB.getSquare(moveIndex).getPiece().getColor() == ChessColor.BLACK && bturn == true) {
+					
+					if (chessB.movePiece(moveIndex, ruta) == false && bturn == true) {
+						move = 0;
+						viewer.changePiece(moveIndex, ruta);
+						moveIndex = 0;
+					} else {
+						move = 0;
+						viewer.changePiece(moveIndex, ruta);
+						moveIndex = 0;
+						setBTurn(false);
+						setWTurn(true);
+					}
+				} 
+				else if (chessB.getSquare(moveIndex).getPiece().getColor() == ChessColor.WHITE && wturn == true) {
+					
+					if (chessB.movePiece(moveIndex, ruta) == false && wturn == true) {
+						move = 0;
+						viewer.changePiece(moveIndex, ruta);
+						moveIndex = 0;
+					} else {
+						move = 0;
+						viewer.changePiece(moveIndex, ruta);
+						moveIndex = 0;
+						setBTurn(true);
+						setWTurn(false);
+
+					}
+
+				} else {
+					move = 0;
+					System.out.println("inte din tur");
+				}
+			}
+		}
 
 	}
 	
