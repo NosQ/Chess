@@ -8,17 +8,13 @@ import board.ChessColor;
 
 public class GraphicController {
 	
-	private Board chessB;
+	private Board chessB = new Board();
 	private int move = 0;
 	private int moveIndex;
 	private GraphicBoard viewer;
 	private boolean moveable = true;
 	private boolean bturn = false;
 	private boolean wturn = true;
-	
-	public GraphicController(Board board){
-		chessB = board;
-	}
 	
 	public void movePiece(int ruta){
 		if(moveable) {	
@@ -93,9 +89,8 @@ public class GraphicController {
 		wturn = turn;
 	}
 
-	public static void execute() {
-		Board board = new Board();
-		GraphicController cont  = new GraphicController(board);
+	public void execute() {
+		GraphicController cont  = new GraphicController();
 		GraphicBoard grafik = new GraphicBoard(cont);
 		cont.setGraphicBoard(grafik);
 		grafik.updateDisplay();

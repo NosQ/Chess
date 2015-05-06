@@ -8,7 +8,7 @@ import graphics.GraphicController;
  */
 public class StartGame {
 	public static void main(String[] args) {
-		GraphicController.execute();
+		new GraphicController().execute();
 	}
 
 }
