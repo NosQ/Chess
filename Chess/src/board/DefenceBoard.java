@@ -13,6 +13,7 @@ public class DefenceBoard {
 	private ChessColor color;
 	private Board board;
 	private ArrayList<Square> escapeSquares = new ArrayList<Square>();
+	private Piece pieceBackup;
 	
 	public DefenceBoard(ChessColor color, Board board) {
 		this.color = color;
@@ -40,8 +41,8 @@ public class DefenceBoard {
 					Square sqMv = piece.getMoves().getPossibleSquares().get(sqMvNr);
 					
 					//För att fixa bugg:445
-					Piece pieceBackup = sqMv.getPiece();					
-					System.out.println("pieceBackup = " + pieceBackup.getPieceType());
+					pieceBackup = sqMv.getPiece();					
+					System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
 					
 					//Om rutan i attackradie inte är en tom ruta, så gör den tom.
 					if (sqMv.getPiece().getPieceType() != PieceType.EMPTY){						
@@ -74,18 +75,32 @@ public class DefenceBoard {
 							sqMv.setOccupied(true);
 						}
 						
+						pieceBackup.setSquare(sqMv);	//solved bugg:445
+						
 						System.out.println("reverse forcePieceMove ");
+						board.printBoard();
+						System.out.println("Backup Pjäsens possible moves: ");
+						pieceBackup.printPossibleMoves();
+						System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
+						
 						board.printSquaresOccupied();
 						
 					} else {
 						
 						sqAt.setPiece(pieceBackup);
-						board.forceMovePiece(sqMv, sqAt);
 						
+						board.forceMovePiece(sqMv, sqAt);
 						if(sqMv.getPiece().getPieceType() != PieceType.EMPTY)
 							sqMv.setOccupied(true);
 						
+						pieceBackup.setSquare(sqMv);	//solved bugg:445
+						
 						System.out.println("\nreverse forcePieceMove ");
+						board.printBoard();
+						System.out.println("Backup Pjäsens possible moves: ");
+						pieceBackup.printPossibleMoves();
+						System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
+						
 						board.printSquaresOccupied();
 					}
 				}
