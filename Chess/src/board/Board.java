@@ -63,7 +63,7 @@ public class Board {
 	}	
 	
 	//-----------Move and Check-logic------------	
-	public void movePiece(int index, int moveTo){
+	public boolean movePiece(int index, int moveTo){
 			
 		Piece piece = mailbox.getSquare(index).getPiece();		
 			
@@ -98,7 +98,7 @@ public class Board {
 					whiteDefenceBoard.generateEscapeSquares();
 					whiteDefenceBoard.printEscapeSquares();
 					
-					if(blackDefenceBoard.isEmpty()){						
+					if(whiteDefenceBoard.isEmpty()){						
 						System.out.println("GAME OVER BITCH, White lost");
 					}
 					else{
@@ -106,12 +106,16 @@ public class Board {
 					}					
 				}				
 				System.out.println("Giltligt drag");
+				return true;
 					
 			}
 			else{
 				System.out.println("Ogiltligt drag");
+				return false;
 			}
-	}			
+			
+	}	
+	
 	public void updateAttackBoards(){
 		whiteAttckBoard.updateAttackSquares();
 		blackAttckBoard.updateAttackSquares();		
@@ -149,78 +153,7 @@ public class Board {
 	public Square[] getBoardSquares(){
 		return mailbox.getSquareList();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*//Fungerar enbart om man bytar till en tom ruta. 	
-	public void forceMovePiece(int index, int moveTo){
-		
-		Piece pieceMvTo = mailbox.getSquare(moveTo).getPiece();
-		Piece pieceBackup = pieceMvTo;
-		
-		//Sätter moveToSquare pjäs till squareAts pjäs.
-		mailbox.getSquare(moveTo).setPiece(mailbox.getSquare(index).getPiece());
-		
-		mailbox.getSquare(index).setPiece(pieceMvTo);
-		
-		pieceMvTo.setSquare(getSquare(moveTo));
-		
-		mailbox.getSquare(index).setOccupied(false);
-		mailbox.getSquare(moveTo).setOccupied(true);
-	}*/
-	
-	
-	
-	
-	//--------Print-methods DOWN!!!---------
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	//--------Print-methods---------
 	public void printBoard(){
