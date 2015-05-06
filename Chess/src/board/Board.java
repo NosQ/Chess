@@ -25,7 +25,7 @@ public class Board {
 		whiteDefenceBoard = new DefenceBoard(ChessColor.WHITE, this);
 		blackDefenceBoard = new DefenceBoard(ChessColor.BLACK, this);		
 		updateAttackBoards();	
-		printAttackBoards();
+	//	printAttackBoards();
 	}	
 	
 	public boolean kingInCheck(ChessColor color){
