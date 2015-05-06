@@ -39,6 +39,10 @@ public class GraphicController {
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
+						if(chessB.isWMate()){
+							moveable = false;
+							JOptionPane.showMessageDialog(null, "Schackmatt\nSvart vann!");
+						}
 						setBTurn(false);
 						setWTurn(true);
 					}
@@ -55,15 +59,14 @@ public class GraphicController {
 						moveIndex = 0;
 						
 						// Kollar med board så att det inte är matt och sätter pjäser orörligbara
-						if(chessB.isBMate() || chessB.isWMate()) {
+			//			if(chessB.isBMate() || chessB.isWMate()) {
+							
 							if(chessB.isBMate()) {
 								moveable = false;
 								JOptionPane.showMessageDialog(null, "Schackmatt\nVit vann!");
-							} else {
-								moveable = false;
-								JOptionPane.showMessageDialog(null, "Schackmatt\nSvart vann!");
-							}
-						}
+							} 
+							
+						//}
 						
 						setBTurn(true);
 						setWTurn(false);
