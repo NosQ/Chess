@@ -1,6 +1,7 @@
 package graphics;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import board.Board;
 import board.ChessColor;
@@ -11,6 +12,7 @@ public class GraphicController {
 	private int move = 0;
 	private int moveIndex;
 	private GraphicBoard viewer;
+	private boolean moveable = true;
 	private boolean bturn = false;
 	private boolean wturn = true;
 	
@@ -19,7 +21,7 @@ public class GraphicController {
 	}
 	
 	public void movePiece(int ruta){
-		if (!chessB.isMate()) {
+		if(moveable) {	
 			
 			if (move == 0) {
 				moveIndex = ruta;
@@ -51,6 +53,18 @@ public class GraphicController {
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
+						
+						// Kollar med board så att det inte är matt och sätter pjäser orörligbara
+						if(chessB.isBMate() || chessB.isWMate()) {
+							if(chessB.isBMate()) {
+								moveable = false;
+								JOptionPane.showMessageDialog(null, "Schackmatt\nVit vann!");
+							} else {
+								moveable = false;
+								JOptionPane.showMessageDialog(null, "Schackmatt\nSvart vann!");
+							}
+						}
+						
 						setBTurn(true);
 						setWTurn(false);
 
@@ -62,7 +76,6 @@ public class GraphicController {
 				}
 			}
 		}
-
 	}
 	
 	public Board getBoard(){
