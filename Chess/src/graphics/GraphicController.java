@@ -92,10 +92,8 @@ public class GraphicController {
 	public void setWTurn(boolean turn){
 		wturn = turn;
 	}
-	
-	
-	
-	public static void main(String[] args) {
+
+	public static void execute() {
 		Board board = new Board();
 		GraphicController cont  = new GraphicController(board);
 		GraphicBoard grafik = new GraphicBoard(cont);
