@@ -28,23 +28,25 @@ public class Board {
 		printAttackBoards();
 	}	
 	
-	public boolean whiteKingInCheck(){	
+	public boolean kingInCheck(ChessColor color){
 		
-		for(Square attackSq : blackAttckBoard.getAttackSquares()){
-			if(attackSq == getKingPosition(ChessColor.WHITE)){
-				return true;
+		if(color == ChessColor.WHITE){
+			for(Square attackSq : blackAttckBoard.getAttackSquares()){
+				if(attackSq == getKingPosition(ChessColor.WHITE)){
+					System.out.println("White King in check");
+					return true;
+				}
+			}
+		}				
+		else if(color == ChessColor.BLACK){			
+			for(Square attackSq : whiteAttckBoard.getAttackSquares()){
+				if(attackSq == getKingPosition(ChessColor.BLACK)){
+					System.out.println("Black King in check");
+					return true;
+				}
 			}
 		}
 		return false;
-	}
-	public boolean blackKingInCheck(){
-		
-		for(Square attackSq : whiteAttckBoard.getAttackSquares()){
-			if(attackSq == getKingPosition(ChessColor.BLACK)){
-				return true;
-			}
-		}
-		return false;		
 	}
 	
 	public Square getKingPosition(ChessColor color){		
@@ -76,9 +78,9 @@ public class Board {
 				updateAttackBoards();	
 //				printAttackBoards();
 				//---------checkforcheck----------
-				if (blackKingInCheck() == true) {
+				if (kingInCheck(ChessColor.BLACK) == true) {
 					
-					System.out.println("\nblack king in check...");
+//					System.out.println("\nblack king in check...");
 					blackDefenceBoard.generateEscapeSquares();
 					blackDefenceBoard.printEscapeSquares();
 					
@@ -89,8 +91,17 @@ public class Board {
 						System.out.println("inte schack matt ");
 					}					
 				}
-				else if (whiteKingInCheck() == true) {
-					System.out.println("white king in check...");	
+				else if (kingInCheck(ChessColor.WHITE) == true) {
+//					System.out.println("white king in check...");	
+					whiteDefenceBoard.generateEscapeSquares();
+					whiteDefenceBoard.printEscapeSquares();
+					
+					if(blackDefenceBoard.isEmpty()){						
+						System.out.println("GAME OVER BITCH");
+					}
+					else{
+						System.out.println("inte schack matt ");
+					}					
 				}				
 				System.out.println("Giltligt drag");
 					

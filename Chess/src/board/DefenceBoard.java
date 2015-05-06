@@ -55,7 +55,7 @@ public class DefenceBoard {
 					System.out.println("\nKungens Ruta: " + board.getKingPosition(ChessColor.BLACK).getValueNbr());
 					
 					//kollar efter schack vid simul-drag
-					inCheck = board.blackKingInCheck();
+					inCheck = board.kingInCheck(color);
 					
 					printDebuggAfterSimul();					
 					
