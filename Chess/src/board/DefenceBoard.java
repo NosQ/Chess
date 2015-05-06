@@ -57,57 +57,42 @@ public class DefenceBoard {
 					//kollar efter schack vid simul-drag
 					inCheck = board.blackKingInCheck();
 					
-					board.printBoard();						
-					System.out.println("First forcePieceMove ");
-					board.printSquaresOccupied();
-					System.out.println("Black King inCheck =  " + inCheck);
+					printDebuggAfterSimul();					
 					
-					//Om kungen INTE är i schack
-					if (inCheck == false) {
-						
-						escapeSquares.add(sqMv);
-	
-						sqAt.setPiece(pieceBackup);
-						
-						board.forceMovePiece(sqMv, sqAt);
-						
-						if(sqMv.getPiece().getPieceType() != PieceType.EMPTY){
-							sqMv.setOccupied(true);
-						}
-						
-						pieceBackup.setSquare(sqMv);	//solved bugg:445
-						
-						System.out.println("reverse forcePieceMove ");
-						board.printBoard();
-						System.out.println("Backup Pjäsens possible moves: ");
-						pieceBackup.printPossibleMoves();
-						System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
-						
-						board.printSquaresOccupied();
-						
-					} else {
-						
-						sqAt.setPiece(pieceBackup);
-						
-						board.forceMovePiece(sqMv, sqAt);
-						if(sqMv.getPiece().getPieceType() != PieceType.EMPTY)
-							sqMv.setOccupied(true);
-						
-						pieceBackup.setSquare(sqMv);	//solved bugg:445
-						
-						System.out.println("\nreverse forcePieceMove ");
-						board.printBoard();
-						System.out.println("Backup Pjäsens possible moves: ");
-						pieceBackup.printPossibleMoves();
-						System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
-						
-						board.printSquaresOccupied();
-					}
+					genEscapeSquares(inCheck, pieceBackup, sqAt, sqMv);
 				}
 				
 			}
 		}
 		
+	}
+	
+	private void genEscapeSquares(boolean inCheck, Piece pieceBackup, Square sqAt, Square sqMv){
+		//Om kungen INTE är i schack
+		if(inCheck == false){
+			escapeSquares.add(sqMv);
+			sqAt.setPiece(pieceBackup);
+			board.forceMovePiece(sqMv, sqAt);
+			
+			if(sqMv.getPiece().getPieceType() != PieceType.EMPTY){
+				sqMv.setOccupied(true);
+			}
+			
+			pieceBackup.setSquare(sqMv);	//solved bugg:445			
+			printDebuggReverse(pieceBackup);
+			
+		}
+		else{
+			sqAt.setPiece(pieceBackup);			
+			board.forceMovePiece(sqMv, sqAt);
+			
+			if(sqMv.getPiece().getPieceType() != PieceType.EMPTY){
+				sqMv.setOccupied(true);
+			}
+			
+			pieceBackup.setSquare(sqMv);	//solved bugg:445			
+			printDebuggReverse(pieceBackup);
+		}		
 	}
 	
 	public boolean isEmpty(){
@@ -117,6 +102,24 @@ public class DefenceBoard {
 	public ArrayList<Square> getEscapeSquares(){
 		return escapeSquares;
 	}
+	
+	//----------Print-methods-----------
+	private void printDebuggAfterSimul(){
+		board.printBoard();						
+		System.out.println("First forcePieceMove ");
+		board.printSquaresOccupied();
+		System.out.println("Black King inCheck =  " + inCheck);
+	}
+	
+	private void printDebuggReverse(Piece pieceBackup){
+		System.out.println("reverse forcePieceMove ");
+		board.printBoard();
+		System.out.println("Backup Pjäsens possible moves: ");
+		pieceBackup.printPossibleMoves();
+		System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
+		board.printSquaresOccupied();
+	}
+	
 	public void printEscapeSquares(){
 		System.out.print("escapeSquares: ");
 		for(Square sq : escapeSquares){
@@ -149,56 +152,6 @@ public class DefenceBoard {
 
 
 
-
-/*
- public boolean simulateCheck() {
-		
-		boolean inCheck = true;
-		
-		System.out.println("testing simulation for " + color);
-		Square[] boardSquares = board.getBoardSquares();
-		
-		//för alla rutor i brädet
-		for (int sqNr = 0; sqNr < boardSquares.length; sqNr++) {
-			
-			if (boardSquares[sqNr].getPiece().getColor() == color) {
-				
-//				ArrayList<Square> possibleMoves = boardSquares[sqNr].getPiece().getMoves().getPossibleSquares();
-				System.out.println("antal drag = "+ possibleMoves.size());
-				
-				int pieceStartIndex = boardSquares[sqNr].getValueNbr();
-				boardSquares[sqNr].getPiece().printPossibleMoves();
-				
-				//för alla moves 
-				for (int possSqNr = 0; possSqNr < possibleMoves.size(); possSqNr++) {
-					
-					System.out.println("lol " + possSqNr);
-					int pieceNextSq = possibleMoves.get(possSqNr).getValueNbr();
-					
-					//flyttar pjäsen till nästa possible square
-					board.forceMovePiece(pieceStartIndex, pieceNextSq);
-					
-					board.updateAttackBoards();
-					
-					board.printBoard();					
-					System.out.println("Black King inCheck =  " + board.getWAttackBoard().inCheck());
-					
-					//Om kungen INTE är i schack
-					if (board.blackKingInCheck() == false) {
-						
-						board.forceMovePiece(pieceNextSq, pieceStartIndex);
-						return false;
-					} else {
-						board.forceMovePiece(pieceNextSq, pieceStartIndex);
-					}
-				}
-			}
-		}
-		System.out.println("SIMULERING KLAR");
-		return true;
-	}
- 
- */
 
 
 
