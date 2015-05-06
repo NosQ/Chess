@@ -52,7 +52,7 @@ public class DefenceBoard {
 					board.forceMovePiece(sqAt, sqMv);						
 					board.updateAttackBoards();			
 					board.printAttackBoards();
-					System.out.println("\nKungens Ruta: " + board.getKingPosition(ChessColor.BLACK).getValueNbr());
+					System.out.println("\nKungens Ruta: " + board.getKingPosition(color).getValueNbr());
 					
 					//kollar efter schack vid simul-drag
 					inCheck = board.kingInCheck(color);
@@ -121,7 +121,7 @@ public class DefenceBoard {
 	}
 	
 	public void printEscapeSquares(){
-		System.out.print("escapeSquares: ");
+		System.out.print(color.name() + " escapeSquares: ");
 		for(Square sq : escapeSquares){
 			System.out.printf(sq.getValueNbr() + ",");
 		}

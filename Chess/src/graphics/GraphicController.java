@@ -3,6 +3,7 @@ package graphics;
 import javax.swing.JFrame;
 
 import board.Board;
+import board.ChessColor;
 
 public class GraphicController {
 	
@@ -10,6 +11,8 @@ public class GraphicController {
 	private int move = 0;
 	private int moveIndex;
 	private GraphicBoard viewer;
+	private boolean bturn = false;
+	private boolean wturn = true;
 	
 	public GraphicController(Board board){
 		chessB = board;
@@ -17,8 +20,21 @@ public class GraphicController {
 	
 	public void movePiece(int ruta){
 		if(move == 0){
+			if(chessB.getSquare(ruta).getPiece().getColor()==ChessColor.BLACK && bturn == true){
 			moveIndex = ruta;
 			move++;
+			setBTurn(false);
+			setWTurn(true);
+			}
+			else if(chessB.getSquare(ruta).getPiece().getColor()==ChessColor.WHITE && wturn == true){
+				moveIndex = ruta;
+				move++;
+				setWTurn(false);
+				setBTurn(true);
+			}
+			else{
+				System.out.println("inte din tur");
+			}
 		}
 		else if(move == 1){
 			chessB.movePiece(moveIndex, ruta);
@@ -36,6 +52,13 @@ public class GraphicController {
 	public void setGraphicBoard(GraphicBoard gb){
 		viewer = gb;
 	}
+	public void setBTurn(boolean turn){
+		bturn = turn;
+	}
+	public void setWTurn(boolean turn){
+		wturn = turn;
+	}
+	
 	
 	
 	public static void main(String[] args) {
@@ -46,4 +69,3 @@ public class GraphicController {
 		grafik.updateDisplay();
 	}
 }
-

@@ -37,8 +37,9 @@ public class Board {
 					return true;
 				}
 			}
-		}				
-		else if(color == ChessColor.BLACK){			
+		}
+		
+		if(color == ChessColor.BLACK){			
 			for(Square attackSq : whiteAttckBoard.getAttackSquares()){
 				if(attackSq == getKingPosition(ChessColor.BLACK)){
 					System.out.println("Black King in check");
@@ -85,19 +86,20 @@ public class Board {
 					blackDefenceBoard.printEscapeSquares();
 					
 					if(blackDefenceBoard.isEmpty()){						
-						System.out.println("GAME OVER BITCH");
+						System.out.println("GAME OVER BITCH, Black lost");
 					}
 					else{
 						System.out.println("inte schack matt ");
 					}					
 				}
-				else if (kingInCheck(ChessColor.WHITE) == true) {
+				
+				if (kingInCheck(ChessColor.WHITE) == true) {
 //					System.out.println("white king in check...");	
 					whiteDefenceBoard.generateEscapeSquares();
 					whiteDefenceBoard.printEscapeSquares();
 					
 					if(blackDefenceBoard.isEmpty()){						
-						System.out.println("GAME OVER BITCH");
+						System.out.println("GAME OVER BITCH, White lost");
 					}
 					else{
 						System.out.println("inte schack matt ");
