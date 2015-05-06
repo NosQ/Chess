@@ -90,9 +90,8 @@ public class GraphicController {
 	}
 
 	public void execute() {
-		GraphicController cont  = new GraphicController();
-		GraphicBoard grafik = new GraphicBoard(cont);
-		cont.setGraphicBoard(grafik);
+		GraphicBoard grafik = new GraphicBoard(this);
+		setGraphicBoard(grafik);
 		grafik.updateDisplay();
 	}
 }
