@@ -7,7 +7,9 @@ import javax.swing.JOptionPane;
 
 import board.Board;
 import board.ChessColor;
-
+/*
+ * Kommentar
+ */
 public class GraphicController {
 	
 	private Board chessB = new Board();

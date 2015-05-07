@@ -12,7 +12,11 @@ import piece.Piece;
 import piece.PieceType;
 import piece.pieces.EmptyPiece;
 import square.Square;
-
+/**
+ * Visuellt bräde och menybar
+ * @author Daniel
+ *
+ */
 public class GraphicBoard {
 	private GraphicSquare[][] squares = new GraphicSquare[8][8];
 	private JPanel mainPanel = new JPanel(new BorderLayout());
