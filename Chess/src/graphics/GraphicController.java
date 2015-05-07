@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import board.Board;
 import board.ChessColor;
 /*
- * Kommentar köfsd
+ * Kommentar köfsdsf
  */
 public class GraphicController {
 	

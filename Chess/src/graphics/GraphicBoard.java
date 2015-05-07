@@ -13,7 +13,7 @@ import piece.PieceType;
 import piece.pieces.EmptyPiece;
 import square.Square;
 /**
- * Visuellt bräde och menybar blubb
+ * Visuellt bräde och menybar blubbdshfw
  * @author Daniel
  *
  */
