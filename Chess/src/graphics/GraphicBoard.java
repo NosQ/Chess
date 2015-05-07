@@ -101,7 +101,7 @@ public class GraphicBoard extends JFrame {
 		
 		menuBar.add(reset);
 		menuBar.add(newGame);
-		mainPanel.add(boardPanel, BorderLayout.WEST);
+		mainPanel.add(boardPanel, BorderLayout.CENTER);
 		mainPanel.add(menuBar, BorderLayout.EAST);
 		
 		
