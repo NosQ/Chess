@@ -25,7 +25,7 @@ public class GraphicBoard {
 	private JPanel infoPnl = new JPanel();
 	private StyledDocument	document = new DefaultStyledDocument();
 	private JTextPane txtPane = new JTextPane(document);
-	private JScrollPane scroll = new JScrollPane(txtPane, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	private JScrollPane scroll = new JScrollPane(txtPane);
 	private GraphicController controller;
 	private JFrame frame = new JFrame("Testar");
 	
@@ -38,8 +38,7 @@ public class GraphicBoard {
 		
 		mainPanel.setPreferredSize(new Dimension(900,660));		
 		boardPanel = new JPanel(new GridLayout(0,8));
-		boardPanel.setBorder(new LineBorder(Color.BLACK));	
-		menuBar.setBorder(new LineBorder(Color.BLACK, 1));	
+		boardPanel.setBorder(new LineBorder(Color.BLACK));		
 		boardPanel.setPreferredSize(new Dimension(650,650));
 		
 		int value = 0;
@@ -55,7 +54,7 @@ public class GraphicBoard {
 					
 				} else {
 					
-					s.setBackground(Color.RED);
+					s.setBackground(Color.GREEN);
 					s.setPiece(controller.getBoard().getSquare(value).getPiece());
 				}
 				
