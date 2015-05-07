@@ -22,7 +22,7 @@ public class GraphicBoard {
 	private JPanel mainPanel = new JPanel(new BorderLayout());
 	private JPanel menuBar = new JPanel(new BorderLayout());
 	private JPanel boardPanel;
-	private JPanel infoLbl = new JPanel();
+	private JPanel infoPnl = new JPanel();
 	private StyledDocument	document = new DefaultStyledDocument();
 	private JTextPane txtPane = new JTextPane(document);
 	private JScrollPane scroll = new JScrollPane(txtPane, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -99,7 +99,7 @@ public class GraphicBoard {
 			public void actionPerformed(ActionEvent e) {
 				boolean yes = JOptionPane.showConfirmDialog(null, "Vill du starta nytt spel?", "Nytt spel", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 				if (yes) {
-					System.out.println("Startar nytt spel ;)");
+					setInfoText("Denna funktion finns ej än\n");
 				}
 			}
 		});
@@ -110,22 +110,22 @@ public class GraphicBoard {
 			public void actionPerformed(ActionEvent e) {
 				boolean yes = JOptionPane.showConfirmDialog(null, "Vill du ångra drag?", "Ångra drag", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 				if (yes) {
-					System.out.println("Ångrar drag ;)");
+					setInfoText("Denna funktion finns ej än\n");
 				}
-				
+
 			}
 		});
 				
-		infoLbl.setPreferredSize(new Dimension(200,400));
-		txtPane.setEditable(false);
+		infoPnl.setPreferredSize(new Dimension(200,400));
 		txtPane.setPreferredSize(new Dimension(190,400));
+		txtPane.setEditable(false);
 		txtPane.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		scroll.setAutoscrolls(true);
-		infoLbl.add(scroll);		
+		infoPnl.add(scroll);		
 		
 		menuBar.add(reset, BorderLayout.SOUTH);
 		menuBar.add(newGame, BorderLayout.NORTH);
-		menuBar.add(infoLbl, BorderLayout.CENTER);
+		menuBar.add(infoPnl, BorderLayout.CENTER);
 		
 		
 		mainPanel.add(boardPanel, BorderLayout.CENTER);
