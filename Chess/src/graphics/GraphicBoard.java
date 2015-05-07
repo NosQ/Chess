@@ -12,8 +12,9 @@ import square.Square;
 
 public class GraphicBoard extends JFrame {
 	private GraphicSquare[][] squares = new GraphicSquare[8][8];
-	private JPanel main = new JPanel(new BorderLayout(3,3));
-	private JPanel board;
+	private JPanel mainPanel = new JPanel(new BorderLayout());
+	private JPanel menuBar = new JPanel();
+	private JPanel boardPanel;
 	private GraphicController controller;
 	private JFrame frame = new JFrame("Testar");
 	
@@ -24,11 +25,12 @@ public class GraphicBoard extends JFrame {
 	
 	private void initializeGui() {
 		
-		main.setPreferredSize(new Dimension(800,600));
+		mainPanel.setPreferredSize(new Dimension(900,660));		
+		boardPanel = new JPanel(new GridLayout(0,8));
+		boardPanel.setBorder(new LineBorder(Color.BLACK));	
+		menuBar.setBorder(new LineBorder(Color.BLACK));	
+		boardPanel.setPreferredSize(new Dimension(650,650));
 		
-		board = new JPanel(new GridLayout(0,9));
-		board.setBorder(new LineBorder(Color.BLACK));		
-		main.add(board);
 		int value = 0;
 		for(int i = 0; i < squares.length; i++) {
 			for(int j = 0; j < squares[i].length; j++) {
@@ -64,22 +66,45 @@ public class GraphicBoard extends JFrame {
 			}
 		}
 		
+		//--------Skapar rutor på brädet------
+		
 		for (int i = 0; i < 8; i++) {
 			
             for (int j = 0; j < 8; j++) {
-            	
-                switch (j) {
-                    case 0:
-                    	
-                        board.add(new JLabel("" + (i + 1), SwingConstants.CENTER));
-                        
-                    default:
-                    	
-                        board.add(squares[i][j]);
-                        
-                }
+           
+				boardPanel.add(squares[i][j]);
+  
             }
-        }				
+        }
+		
+		//--------Skapar en menubar-----------
+		
+		JButton newGame = new JButton("New game");
+		JButton reset = new JButton("Reset move");
+		newGame.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Så du vill starta ett nytt spel ;)");
+				
+			}
+		});
+		
+		reset.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Så du vill ångra ;)");
+				
+			}
+		});
+		
+		menuBar.add(reset);
+		menuBar.add(newGame);
+		mainPanel.add(boardPanel, BorderLayout.CENTER);
+		mainPanel.add(menuBar, BorderLayout.EAST);
+		
+		
 	}
 	
 	public void changePiece(int index, int to){
@@ -107,7 +132,7 @@ public class GraphicBoard extends JFrame {
 	}
 	
 	public void updateDisplay(){
-		frame.add(main);
+		frame.add(mainPanel);
 		frame.pack();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
