@@ -157,7 +157,7 @@ public class GraphicBoard {
 		
 		try {
 			
-			document.insertString(document.getLength(), info, null);
+			document.insertString(document.getLength(), " "+info, null);
 			
 		} catch (BadLocationException e) {}
 		

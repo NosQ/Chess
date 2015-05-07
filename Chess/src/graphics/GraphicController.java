@@ -85,7 +85,7 @@ public class GraphicController {
 
 				} else {
 					move = 0;
-					System.out.println("inte din tur");
+					viewer.setInfoText("Inte din tur\n");
 				}
 			}
 		}
