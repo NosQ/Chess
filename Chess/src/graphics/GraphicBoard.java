@@ -4,17 +4,28 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.StyledDocument;
 
 import piece.Piece;
 import piece.PieceType;
 import piece.pieces.EmptyPiece;
 import square.Square;
-
-public class GraphicBoard extends JFrame {
+/**
+ * Visuellt bräde och menybar
+ * @author Daniel
+ *
+ */
+public class GraphicBoard {
 	private GraphicSquare[][] squares = new GraphicSquare[8][8];
 	private JPanel mainPanel = new JPanel(new BorderLayout());
-	private JPanel menuBar = new JPanel();
+	private JPanel menuBar = new JPanel(new BorderLayout());
 	private JPanel boardPanel;
+	private JPanel infoPnl = new JPanel();
+	private StyledDocument	document = new DefaultStyledDocument();
+	private JTextPane txtPane = new JTextPane(document);
+	private JScrollPane scroll = new JScrollPane(txtPane, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	private GraphicController controller;
 	private JFrame frame = new JFrame("Testar");
 	
@@ -28,7 +39,7 @@ public class GraphicBoard extends JFrame {
 		mainPanel.setPreferredSize(new Dimension(900,660));		
 		boardPanel = new JPanel(new GridLayout(0,8));
 		boardPanel.setBorder(new LineBorder(Color.BLACK));	
-		menuBar.setBorder(new LineBorder(Color.BLACK));	
+		menuBar.setBorder(new LineBorder(Color.BLACK, 1));	
 		boardPanel.setPreferredSize(new Dimension(650,650));
 		
 		int value = 0;
@@ -81,12 +92,15 @@ public class GraphicBoard extends JFrame {
 		
 		JButton newGame = new JButton("New game");
 		JButton reset = new JButton("Reset move");
+		
 		newGame.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Så du vill starta ett nytt spel ;)");
-				
+				boolean yes = JOptionPane.showConfirmDialog(null, "Vill du starta nytt spel?", "Nytt spel", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+				if (yes) {
+					setInfoText("Denna funktion finns ej än\n");
+				}
 			}
 		});
 		
@@ -94,13 +108,26 @@ public class GraphicBoard extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Så du vill ångra ;)");
-				
+				boolean yes = JOptionPane.showConfirmDialog(null, "Vill du ångra drag?", "Ångra drag", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+				if (yes) {
+					setInfoText("Denna funktion finns ej än\n");
+				}
+
 			}
 		});
+				
+		infoPnl.setPreferredSize(new Dimension(200,400));
+		txtPane.setPreferredSize(new Dimension(190,400));
+		txtPane.setEditable(false);
+		txtPane.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		scroll.setAutoscrolls(true);
+		infoPnl.add(scroll);		
 		
-		menuBar.add(reset);
-		menuBar.add(newGame);
+		menuBar.add(reset, BorderLayout.SOUTH);
+		menuBar.add(newGame, BorderLayout.NORTH);
+		menuBar.add(infoPnl, BorderLayout.CENTER);
+		
+		
 		mainPanel.add(boardPanel, BorderLayout.CENTER);
 		mainPanel.add(menuBar, BorderLayout.EAST);
 		
@@ -126,13 +153,24 @@ public class GraphicBoard extends JFrame {
 		}		
 	}
 	
+	public void setInfoText(String info) {
+		
+		try {
+			
+			document.insertString(document.getLength(), info, null);
+			
+		} catch (BadLocationException e) {}
+		
+	}
+	
 	
 	public JFrame getGui() {
-		return this;
+		return frame;
 	}
 	
 	public void updateDisplay(){
 		frame.add(mainPanel);
+		frame.setResizable(false);
 		frame.pack();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
