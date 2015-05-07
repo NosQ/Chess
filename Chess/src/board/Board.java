@@ -10,9 +10,9 @@ import piece.pieces.EmptyPiece;
 import piece.pieces.King;
 import square.Square;
 
-
 public class Board {
 	
+	private Player playerWhite, playerBlack;
 	private MailBox mailbox;
 	private AttackBoard whiteAttckBoard, blackAttckBoard;
 	private DefenceBoard whiteDefenceBoard, blackDefenceBoard;
@@ -27,8 +27,23 @@ public class Board {
 		whiteDefenceBoard = new DefenceBoard(ChessColor.WHITE, this);
 		blackDefenceBoard = new DefenceBoard(ChessColor.BLACK, this);		
 		updateAttackBoards();	
+		
+		playerWhite = new Player("Kalle", ChessColor.WHITE, this);
+		playerBlack = new Player("Inga", ChessColor.BLACK, this);
 	//	printAttackBoards();
 	}	
+	
+	public Square getKingPosition(ChessColor color){		
+		
+		Square[] boardSquares = getBoardSquares();
+		
+		for(Square square : boardSquares){			
+			if(square.getPiece().getPieceType() == PieceType.KING && square.getPiece().getColor() == color ){
+				return square;
+			}
+		}
+		return null;
+	}
 	
 	public boolean kingInCheck(ChessColor color){
 		
@@ -52,72 +67,52 @@ public class Board {
 		return false;
 	}
 	
-	public Square getKingPosition(ChessColor color){		
-		
-		Square[] boardSquares = getBoardSquares();
-		
-		for(Square square : boardSquares){			
-			if(square.getPiece().getPieceType() == PieceType.KING && square.getPiece().getColor() == color ){
-				return square;
-			}
-		}
-		return null;
-	}	
+	public boolean InMate(ChessColor color){
+		//---------checkforBlackcheck----------
+		if (kingInCheck(color) == true) {
+			
+			getDefenceBoard(color).generateEscapeSquares();
+			getDefenceBoard(color).printEscapeSquares();
+			
+			if(getDefenceBoard(color).isEmpty()){						
+				System.out.println("GAME OVER BITCH, " + color.name() + " lost!");				
+				setBMate(true);
+				
+				return true;				
+			}else{
+				System.out.println("Kung " + color.name() + " är inte i schack matt ");				
+			}					
+		}		
+		return false;		
+	}
 	
 	//-----------Move and Check-logic------------	
-	public boolean movePiece(int index, int moveTo){
+	public boolean movePiece(int startSquare, int endSquare){
 			
-		Piece piece = mailbox.getSquare(index).getPiece();		
+		Piece piece = mailbox.getSquare(startSquare).getPiece();		
 			
-			if(piece.movement(moveTo)){
+			if(piece.movement(endSquare)){
 				
-				mailbox.getSquare(moveTo).setPiece(mailbox.getSquare(index).getPiece());
-				mailbox.getSquare(index).setPiece(mailbox.getEmptyPiece());
-				piece.setSquare(getSquare(moveTo));
+				mailbox.getSquare(endSquare).setPiece(mailbox.getSquare(startSquare).getPiece());
+				mailbox.getSquare(startSquare).setPiece(mailbox.getEmptyPiece());
+				piece.setSquare(getSquare(endSquare));
 				
-				mailbox.getSquare(index).setOccupied(false);
-				mailbox.getSquare(moveTo).setOccupied(true);
+				mailbox.getSquare(startSquare).setOccupied(false);
+				mailbox.getSquare(endSquare).setOccupied(true);
 				
 				updateAttackBoards();	
 //				printAttackBoards();
-				//---------checkforcheck----------
-				if (kingInCheck(ChessColor.BLACK) == true) {
-					
-//					System.out.println("\nblack king in check...");
-					blackDefenceBoard.generateEscapeSquares();
-					blackDefenceBoard.printEscapeSquares();
-					
-					if(blackDefenceBoard.isEmpty()){						
-						System.out.println("GAME OVER BITCH, Black lost");
-						setBMate(true);
-					}
-					else{
-						System.out.println("inte schack matt ");
-					}					
-				}
 				
-				if (kingInCheck(ChessColor.WHITE) == true) {
-//					System.out.println("white king in check...");	
-					whiteDefenceBoard.generateEscapeSquares();
-					whiteDefenceBoard.printEscapeSquares();
-					
-					if(whiteDefenceBoard.isEmpty()){						
-						System.out.println("GAME OVER BITCH, White lost");
-						setWMate(true);
-					}
-					else{
-						System.out.println("inte schack matt ");
-					}					
-				}				
+				InMate(ChessColor.WHITE);
+				InMate(ChessColor.BLACK);
+				
 				System.out.println("Giltligt drag");
-				return true;
-					
+				return true;					
 			}
 			else{
 				System.out.println("Ogiltligt drag");
 				return false;
-			}
-			
+			}			
 	}	
 	
 	public void updateAttackBoards(){
@@ -138,7 +133,11 @@ public class Board {
 			
 			startSquare.setOccupied(false);
 			endSquare.setOccupied(true);
-		}
+	}
+	
+	public void reverseMove(){
+		
+	}	
 	
 	
 	//----Get/Set-metoder för shackmatt----
@@ -176,7 +175,21 @@ public class Board {
 	public Square[] getBoardSquares(){
 		return mailbox.getSquareList();
 	}
+	
+	private DefenceBoard getDefenceBoard(ChessColor color){
+		
+		if(color == ChessColor.WHITE) return whiteDefenceBoard;
+		if(color == ChessColor.BLACK) return blackDefenceBoard;
+		
+		return null;
+	}
 
+	public Player getPlayerWhite(){
+		return playerWhite;
+	}
+	public Player getPlayerBlack(){
+		return playerBlack;
+	}
 	
 	//--------Print-methods---------
 	public void printBoard(){
@@ -205,5 +218,4 @@ public class Board {
 		printAttackBoards();
 		printSquareValues();
 	}
-
 }	

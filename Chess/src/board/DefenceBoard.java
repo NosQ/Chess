@@ -35,41 +35,45 @@ public class DefenceBoard {
 				
 				piece.printPossibleMoves();
 				
-				//För alla rutor i pjäsens possibleMoves.
-				for(int sqMvNr = 0; sqMvNr < piece.getMoves().getPossibleSquares().size(); sqMvNr++){
-					
-					Square sqMv = piece.getMoves().getPossibleSquares().get(sqMvNr);
-					
-					//För att fixa bugg:445
-					pieceBackup = sqMv.getPiece();					
-					System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
-					
-					//Om rutan i attackradie inte är en tom ruta, så gör den tom.
-					if (sqMv.getPiece().getPieceType() != PieceType.EMPTY){						
-						sqMv.setPiece(sqMv.getMailbox().getEmptyPiece());						
-					}
-					
-					board.forceMovePiece(sqAt, sqMv);						
-					board.updateAttackBoards();			
-					board.printAttackBoards();
-					System.out.println("\nKungens Ruta: " + board.getKingPosition(color).getValueNbr());
-					
-					//kollar efter schack vid simul-drag
-					inCheck = board.kingInCheck(color);
-					
-					printDebuggAfterSimul();					
-					
-					genEscapeSquares(inCheck, pieceBackup, sqAt, sqMv);
-				}
-				
+				iteratePiecePossSquares(piece, sqAt);				
 			}
-		}
-		
+		}		
 	}
 	
-	private void genEscapeSquares(boolean inCheck, Piece pieceBackup, Square sqAt, Square sqMv){
+	private void iteratePiecePossSquares(Piece piece, Square sqAt){
+		
+		//För alla rutor i pjäsens possibleMoves.
+		for(int sqMvNr = 0; sqMvNr < piece.getMoves().getPossibleSquares().size(); sqMvNr++){
+			
+			Square sqMv = piece.getMoves().getPossibleSquares().get(sqMvNr);
+			
+			//För att fixa bugg:445
+			pieceBackup = sqMv.getPiece();					
+			System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
+			
+			//Om rutan i attackradie inte är en tom ruta, så gör den tom.
+			if (sqMv.getPiece().getPieceType() != PieceType.EMPTY){						
+				sqMv.setPiece(sqMv.getMailbox().getEmptyPiece());						
+			}
+			
+			board.forceMovePiece(sqAt, sqMv);						
+			board.updateAttackBoards();			
+			board.printAttackBoards();
+			System.out.println("\nKungens Ruta: " + board.getKingPosition(color).getValueNbr());
+			
+			//kollar efter schack vid simul-drag
+			inCheck = board.kingInCheck(color);
+			
+			printDebuggAfterSimul();					
+			
+			addEscapeSquare(inCheck, pieceBackup, sqAt, sqMv);
+		}		
+	}
+	
+	private void addEscapeSquare(boolean inCheck, Piece pieceBackup, Square sqAt, Square sqMv){
 		//Om kungen INTE är i schack
 		if(inCheck == false){
+			
 			escapeSquares.add(sqMv);
 			sqAt.setPiece(pieceBackup);
 			board.forceMovePiece(sqMv, sqAt);
@@ -79,8 +83,7 @@ public class DefenceBoard {
 			}
 			
 			pieceBackup.setSquare(sqMv);	//solved bugg:445			
-			printDebuggReverse(pieceBackup);
-			
+			printDebuggReverse(pieceBackup);			
 		}
 		else{
 			sqAt.setPiece(pieceBackup);			
