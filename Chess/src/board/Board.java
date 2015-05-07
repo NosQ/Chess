@@ -93,12 +93,12 @@ public class Board {
 			
 			if(piece.movement(endSquare)){
 				
-				mailbox.getSquare(endSquare).setPiece(mailbox.getSquare(startSquare).getPiece());
-				mailbox.getSquare(startSquare).setPiece(mailbox.getEmptyPiece());
+				getSquare(endSquare).setPiece(mailbox.getSquare(startSquare).getPiece());
+				getSquare(startSquare).setPiece(mailbox.getEmptyPiece());
 				piece.setSquare(getSquare(endSquare));
 				
-				mailbox.getSquare(startSquare).setOccupied(false);
-				mailbox.getSquare(endSquare).setOccupied(true);
+				getSquare(startSquare).setOccupied(false);
+				getSquare(endSquare).setOccupied(true);
 				
 				updateAttackBoards();	
 //				printAttackBoards();
@@ -119,25 +119,28 @@ public class Board {
 		whiteAttckBoard.updateAttackSquares();
 		blackAttckBoard.updateAttackSquares();		
 	}
-		
+	
+	//Måste få en beskrivning vad som händer.	
 	public void forceMovePiece(Square startSquare, Square endSquare){
-			
-			Piece pieceMvTo = endSquare.getPiece();
-			
-			//Sätter moveToSquare pjäs till squareAts pjäs.
-			endSquare.setPiece(startSquare.getPiece());
-			
-			startSquare.setPiece(pieceMvTo);
-			
-			pieceMvTo.setSquare(endSquare);
-			
-			startSquare.setOccupied(false);
-			endSquare.setOccupied(true);
+		
+		Piece pieceMvTo = endSquare.getPiece();
+		
+		//Sätter moveToSquare pjäs till squareAts pjäs. Men ändrar inte pjäsens square.
+		endSquare.setPiece(startSquare.getPiece());
+		
+		startSquare.setPiece(pieceMvTo);
+		
+		pieceMvTo.setSquare(endSquare);
+		
+		startSquare.setOccupied(false);
+		endSquare.setOccupied(true);
 	}
 	
 	public void reverseMove(){
 		
-	}	
+	}
+	
+	
 	
 	
 	//----Get/Set-metoder för shackmatt----
