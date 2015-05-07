@@ -1,5 +1,7 @@
 package graphics;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -11,7 +13,7 @@ public class GraphicController {
 	private Board chessB = new Board();
 	private int move = 0;
 	private int moveIndex;
-	private GraphicBoard viewer;
+	private GraphicBoard viewer = new GraphicBoard(this);
 	private boolean moveable = true;
 	private boolean bturn = false;
 	private boolean wturn = true;
@@ -32,6 +34,7 @@ public class GraphicController {
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
 					} else {
+						viewer.setInfoText("Giltligt drag svart\n");
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
@@ -53,6 +56,7 @@ public class GraphicController {
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
 					} else {
+						viewer.setInfoText("Giltligt drag vit\n");
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
