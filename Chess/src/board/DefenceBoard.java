@@ -75,6 +75,7 @@ public class DefenceBoard {
 		if(inCheck == false){
 			
 			escapeSquares.add(sqMv);
+			
 			sqAt.setPiece(pieceBackup);
 			board.forceMovePiece(sqMv, sqAt);
 			
