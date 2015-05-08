@@ -19,6 +19,8 @@ public class GraphicController {
 	private boolean moveable = true;
 	private boolean bturn = false;
 	private boolean wturn = true;
+	private int resetMove1 = 0;
+	private int resetMove2 = 0;
 	
 	public void movePiece(int ruta){
 		if(moveable) {	
@@ -32,10 +34,14 @@ public class GraphicController {
 				if (chessB.getSquare(moveIndex).getPiece().getColor() == ChessColor.BLACK && bturn == true) {
 					
 					if (chessB.movePiece(moveIndex, ruta) == false && bturn == true) {
+						resetMove1 = ruta;
+						resetMove2 = moveIndex;
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
 					} else {
+						resetMove1 = ruta;
+						resetMove2 = moveIndex;
 						viewer.setInfoText("Giltligt drag svart\n");
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
@@ -58,12 +64,16 @@ public class GraphicController {
 				else if (chessB.getSquare(moveIndex).getPiece().getColor() == ChessColor.WHITE && wturn == true) {
 					
 					if (chessB.movePiece(moveIndex, ruta) == false && wturn == true) {
+						resetMove1 = ruta;
+						resetMove2 = moveIndex;
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
 						
 					} else {
 						viewer.setInfoText("Giltligt drag vit\n");
+						resetMove1 = ruta;
+						resetMove2 = moveIndex;
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
@@ -89,6 +99,7 @@ public class GraphicController {
 				}
 			}
 		}
+		
 	}
 	
 	public Board getBoard(){
@@ -102,6 +113,23 @@ public class GraphicController {
 	}
 	public void setWTurn(boolean turn){
 		wturn = turn;
+	}
+	public void resetMove(){
+		chessB.forceMovePiece(chessB.getSquare(resetMove1), chessB.getSquare(resetMove2));
+		if(bturn==false){
+			setBTurn(true);
+			setWTurn(false);
+		}
+		else if(wturn==false){
+			setBTurn(false);
+			setWTurn(true);
+		}
+	}
+	public int getResetMove1(){
+		return resetMove1;
+	}
+	public int getResetMove2(){
+		return resetMove2;
 	}
 
 	public void execute() {

@@ -27,7 +27,7 @@ public class GraphicBoard {
 	private JTextPane txtPane = new JTextPane(document);
 	private JScrollPane scroll = new JScrollPane(txtPane);
 	private GraphicController controller;
-	private JFrame frame = new JFrame("Testar");
+	private JFrame frame = new JFrame("VÄRLDENS BÄSTA SCHACKSPEL");
 	
 	public GraphicBoard(GraphicController controller) {
 		this.controller = controller;
@@ -98,6 +98,7 @@ public class GraphicBoard {
 			public void actionPerformed(ActionEvent e) {
 				boolean yes = JOptionPane.showConfirmDialog(null, "Vill du starta nytt spel?", "Nytt spel", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 				if (yes) {
+					newGame();
 					setInfoText("Denna funktion finns ej än\n");
 				}
 			}
@@ -109,7 +110,7 @@ public class GraphicBoard {
 			public void actionPerformed(ActionEvent e) {
 				boolean yes = JOptionPane.showConfirmDialog(null, "Vill du ångra drag?", "Ångra drag", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 				if (yes) {
-					setInfoText("Denna funktion finns ej än\n");
+					resetMove();
 				}
 
 			}
@@ -162,9 +163,31 @@ public class GraphicBoard {
 		
 	}
 	
-	
+	public void newGame(){
+		GraphicBoard grafik = new GraphicBoard(new GraphicController());
+		grafik.controller.setGraphicBoard(grafik);
+		setPanel(grafik.getPanel());
+		updateDisplay();
+		grafik.controller.setBTurn(false);
+		grafik.controller.setWTurn(true);
+		
+	}
+	public void resetMove(){
+		controller.resetMove();
+		changePiece(controller.getResetMove1(), controller.getResetMove2());
+		updateDisplay();
+	}
 	public JFrame getGui() {
 		return frame;
+	}
+	public JPanel getFrame(){
+		return mainPanel;
+	}
+	public void setPanel(JPanel panel){
+		mainPanel = panel;
+	}
+	public JPanel getPanel(){
+		return mainPanel;
 	}
 	
 	public void updateDisplay(){
