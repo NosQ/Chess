@@ -174,6 +174,7 @@ public class GraphicBoard {
 	}
 	public void resetMove(){
 		controller.resetMove();
+		
 		changePiece(controller.getResetMove1(), controller.getResetMove2());
 		updateDisplay();
 	}

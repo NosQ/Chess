@@ -115,7 +115,7 @@ public class GraphicController {
 		wturn = turn;
 	}
 	public void resetMove(){
-		chessB.forceMovePiece(chessB.getSquare(resetMove1), chessB.getSquare(resetMove2));
+		chessB.reverseMove(resetMove1, resetMove2);
 		if(bturn==false){
 			setBTurn(true);
 			setWTurn(false);

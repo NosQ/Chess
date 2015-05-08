@@ -136,8 +136,14 @@ public class Board {
 		endSquare.setOccupied(true);
 	}
 	
-	public void reverseMove(){
+	public void reverseMove(int startSquare, int endSquare){
+		Piece piece = mailbox.getSquare(startSquare).getPiece();
+		getSquare(endSquare).setPiece(mailbox.getSquare(startSquare).getPiece());
+		getSquare(startSquare).setPiece(mailbox.getEmptyPiece());
+		piece.setSquare(getSquare(endSquare));
 		
+		getSquare(startSquare).setOccupied(false);
+		getSquare(endSquare).setOccupied(true);
 	}
 	
 	
