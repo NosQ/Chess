@@ -22,6 +22,10 @@ public class GraphicController {
 	private int resetMove1 = 0;
 	private int resetMove2 = 0;
 	
+	public GraphicController(){
+		newGame();
+	}
+	
 	public void movePiece(int ruta){
 		if(moveable) {	
 			
@@ -130,6 +134,13 @@ public class GraphicController {
 	}
 	public int getResetMove2(){
 		return resetMove2;
+	}
+	
+	public void newGame(){
+		setBTurn(false);
+		setWTurn(true);
+		moveable = true;
+		
 	}
 
 	public void execute() {

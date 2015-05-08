@@ -99,7 +99,6 @@ public class GraphicBoard {
 				boolean yes = JOptionPane.showConfirmDialog(null, "Vill du starta nytt spel?", "Nytt spel", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 				if (yes) {
 					newGame();
-					setInfoText("Denna funktion finns ej än\n");
 				}
 			}
 		});
@@ -164,17 +163,15 @@ public class GraphicBoard {
 	}
 	
 	public void newGame(){
-		GraphicBoard grafik = new GraphicBoard(new GraphicController());
+		GraphicController cont = new GraphicController();
+		GraphicBoard grafik = new GraphicBoard(cont);
 		grafik.controller.setGraphicBoard(grafik);
 		setPanel(grafik.getPanel());
 		updateDisplay();
-		grafik.controller.setBTurn(false);
-		grafik.controller.setWTurn(true);
 		
 	}
 	public void resetMove(){
 		controller.resetMove();
-		
 		changePiece(controller.getResetMove1(), controller.getResetMove2());
 		updateDisplay();
 	}
