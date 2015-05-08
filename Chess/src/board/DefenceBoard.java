@@ -43,20 +43,17 @@ public class DefenceBoard {
 	private void iteratePiecePossSquares(Piece piece, Square sqAt){
 		
 		//För alla rutor i pjäsens possibleMoves.
-		for(int sqMvNr = 0; sqMvNr < piece.getMoves().getPossibleSquares().size(); sqMvNr++){
+		for(int sqMvToNr = 0; sqMvToNr < piece.getMoves().getPossibleSquares().size(); sqMvToNr++){
 			
-			Square sqMv = piece.getMoves().getPossibleSquares().get(sqMvNr);
+			Square sqMvTo = piece.getMoves().getPossibleSquares().get(sqMvToNr);
 			
 			//För att fixa bugg:445
-			pieceBackup = sqMv.getPiece();					
+			pieceBackup = sqMvTo.getPiece();					
 			System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
 			
-			//Om rutan i attackradie inte är en tom ruta, så gör den tom.
-			if (sqMv.getPiece().getPieceType() != PieceType.EMPTY){						
-				sqMv.setPiece(sqMv.getMailbox().getEmptyPiece());						
-			}
 			
-			board.forceMovePiece(sqAt, sqMv);						
+			
+			board.forceMovePiece(sqAt, sqMvTo);						
 			board.updateAttackBoards();			
 			board.printAttackBoards();
 			System.out.println("\nKungens Ruta: " + board.getKingPosition(color).getValueNbr());
@@ -66,35 +63,22 @@ public class DefenceBoard {
 			
 			printDebuggAfterSimul();					
 			
-			addEscapeSquare(inCheck, pieceBackup, sqAt, sqMv);
+			addEscapeSquare(inCheck, pieceBackup, sqAt, sqMvTo);
 		}		
 	}
 	
-	private void addEscapeSquare(boolean inCheck, Piece pieceBackup, Square sqAt, Square sqMv){
+	private void addEscapeSquare(boolean inCheck, Piece pieceBackup, Square squareBeforeMove, Square squareMovedTo){
 		//Om kungen INTE är i schack
 		if(inCheck == false){
 			
-			escapeSquares.add(sqMv);
+			escapeSquares.add(squareMovedTo);			
+			board.reverseMove(squareBeforeMove, squareMovedTo, pieceBackup);
 			
-			sqAt.setPiece(pieceBackup);
-			board.forceMovePiece(sqMv, sqAt);
-			
-			if(sqMv.getPiece().getPieceType() != PieceType.EMPTY){
-				sqMv.setOccupied(true);
-			}
-			
-			pieceBackup.setSquare(sqMv);	//solved bugg:445			
 			printDebuggReverse(pieceBackup);			
 		}
-		else{
-			sqAt.setPiece(pieceBackup);			
-			board.forceMovePiece(sqMv, sqAt);
+		else{			
+			board.reverseMove(squareBeforeMove, squareMovedTo, pieceBackup);		
 			
-			if(sqMv.getPiece().getPieceType() != PieceType.EMPTY){
-				sqMv.setOccupied(true);
-			}
-			
-			pieceBackup.setSquare(sqMv);	//solved bugg:445			
 			printDebuggReverse(pieceBackup);
 		}		
 	}

@@ -120,26 +120,61 @@ public class Board {
 		blackAttckBoard.updateAttackSquares();		
 	}
 	
-	//Måste få en beskrivning vad som händer.	
-	public void forceMovePiece(Square startSquare, Square endSquare){
+
+	/**
+	 * Metoden växlar pjäser mellan squareAt och squareMvTo. Om det står en riktig pjäs på squareMvTo så blir den till en tomPjäs innan bytet.
+	 * Anledning till att den görs om till tom pjäs är för annars hade det inte simulerat ett riktigt drag. Det är INTE tillåtet att 
+	 * växla pjäser mellan olika rutor.    
+	 * @param squareAt
+	 * @param squareMvTo
+	 */
+	public void forceMovePiece(Square squareAt, Square squareMvTo){
 		
-		Piece pieceMvTo = endSquare.getPiece();
+		Piece startSqPiece = squareAt.getPiece();//WhiteRook
+		Piece mvToSqPiece = squareMvTo.getPiece();//BlackQueen
 		
-		//Sätter moveToSquare pjäs till squareAts pjäs. Men ändrar inte pjäsens square.
-		endSquare.setPiece(startSquare.getPiece());
+		//Om rutan i attackradie inte är en tom ruta, så gör den tom.
+		if (mvToSqPiece.getPieceType() != PieceType.EMPTY){		
+			mvToSqPiece = mailbox.getEmptyPiece();//BlackQueen -> EmpteyPiece
+//			sqMvTo.setPiece(sqMvTo.getMailbox().getEmptyPiece());						
+		}
 		
-		startSquare.setPiece(pieceMvTo);
+		//Sätter moveToSquare pjäs till squareAts pjäs och.
+		squareMvTo.setPiece(startSqPiece);
+		startSqPiece.setSquare(squareMvTo);
 		
-		pieceMvTo.setSquare(endSquare);
+		squareAt.setPiece(mvToSqPiece);		
+		mvToSqPiece.setSquare(squareAt);
 		
-		startSquare.setOccupied(false);
-		endSquare.setOccupied(true);
+		squareAt.setOccupied(false);
+		squareMvTo.setOccupied(true);
 	}
-	
-	public void reverseMove(){
+	/**
+	 * Metoden "Ångrar ett drag", backuppjäsen är den pjäs som blev tagen draget innan. 
+	 * @param squareBeforeMove
+	 * @param squareMovedTo
+	 * @param pieceBackup
+	 */
+	public void reverseMove(Square squareBeforeMove, Square squareMovedTo,  Piece pieceBackup/*BlackQueen*/){
 		
-	}
-	
+		Piece sqBeforeMovePiece = squareBeforeMove.getPiece();//EmpteyPiece
+		Piece sqMovedToPiece = squareMovedTo.getPiece();//WhiteRook
+		
+		
+		squareBeforeMove.setPiece(sqMovedToPiece);//Set Piece to WhiteRook
+		sqMovedToPiece.setSquare(squareBeforeMove);//
+		squareBeforeMove.setOccupied(true);
+		
+		squareMovedTo.setPiece(pieceBackup);//Set Piece to BlackQueen
+		pieceBackup.setSquare(squareMovedTo);//
+			
+		if(squareMovedTo.getPiece().getPieceType() != PieceType.EMPTY){
+			squareMovedTo.setOccupied(true);
+		}else{
+			squareMovedTo.setOccupied(false);
+		}
+				
+	}	
 	
 	
 	
