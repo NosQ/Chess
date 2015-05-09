@@ -1,14 +1,10 @@
 package board;
 			
-public class 	Player {
+public class Player {
 	
 	private String name;
 	private ChessColor color;
-	
-	private boolean moved = false;
 	private boolean turn = true;
-	private boolean inCheck;
-	private boolean inMate = false;
 	
 	private Board  board;
 	
@@ -16,20 +12,20 @@ public class 	Player {
 		this.name = name;				
 		this.color = color;
 		this.board = board;
-		inCheck = board.kingInCheck(color);
 	}
 	
 	public void move(int startSquare, int endSquare){
-		
-		board.movePiece(startSquare, endSquare);
-	}
+
+        board.movePiece(color, startSquare, endSquare);
+    }
 	
-	public boolean hasMoved(){
-		return moved;
+	public boolean getTurn(){ return turn;}
+	public void setTurn(boolean turn){
+		this.turn = turn;
 	}
-	
-	public void setMoved(boolean hasMoved){
-		moved = hasMoved;
-	}
+
+    public ChessColor getColor(){
+        return color;
+    }
 
 }

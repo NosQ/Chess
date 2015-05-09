@@ -50,8 +50,7 @@ public class DefenceBoard {
 			//För att fixa bugg:445
 			pieceBackup = sqMvTo.getPiece();					
 			System.out.println("pieceBackup = " + pieceBackup.getPieceType() + " " + pieceBackup.getColor().name() + " pos = " + pieceBackup.getSquareAt().getValueNbr());
-			
-			
+
 			
 			board.forceMovePiece(sqAt, sqMvTo);						
 			board.updateAttackBoards();			
@@ -73,23 +72,17 @@ public class DefenceBoard {
 			
 			escapeSquares.add(squareMovedTo);			
 			board.reverseMove(squareBeforeMove, squareMovedTo, pieceBackup);
-			
 			printDebuggReverse(pieceBackup);			
 		}
 		else{			
-			board.reverseMove(squareBeforeMove, squareMovedTo, pieceBackup);		
-			
+			board.reverseMove(squareBeforeMove, squareMovedTo, pieceBackup);
 			printDebuggReverse(pieceBackup);
 		}		
 	}
 	
-	public boolean isEmpty(){
-		return escapeSquares.isEmpty();
-	}
+	public boolean isEmpty(){ return escapeSquares.isEmpty();}
 	
-	public ArrayList<Square> getEscapeSquares(){
-		return escapeSquares;
-	}
+	public ArrayList<Square> getEscapeSquares(){ return escapeSquares;}
 	
 	//----------Print-methods-----------
 	private void printDebuggAfterSimul(){

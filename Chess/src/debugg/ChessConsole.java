@@ -3,6 +3,8 @@ package debugg;
 import java.util.Scanner;
 
 import board.Board;
+import board.ChessColor;
+import board.Player;
 
 public class ChessConsole {
 	
@@ -10,31 +12,54 @@ public class ChessConsole {
 		public static void main(String[] args) {
 			
 			Board board = new Board();
+            Player playerWhite = board.getPlayer(ChessColor.WHITE);
+            Player playerBlack = board.getPlayer(ChessColor.BLACK);
+
 			board.printEverything();
-			board.printPiecesSquare();
 			
 			Scanner scanner = new Scanner(System.in);
-			int stsq = 0, tosq = 0;
+			int startSquare = 0, MvToSquare = 0;
 			
-			while(true){
-				
-				System.out.println("\nSkriv in vad du vill flytta: t.ex. " + "0,16");
-				
-				if(scanner.hasNext("exit")){
-					System.out.println("closed");
-					break;
-				}
-				
-				String inputMove = scanner.nextLine();
-				String[] positions = inputMove.split(",");
-				
-				stsq = Integer.parseInt(positions[0]);
-				tosq = Integer.parseInt(positions[1]);
-				
-				board.movePiece(stsq, tosq);
-				board.printEverything();	
-				board.printPiecesSquare();
-				
+			while(playerWhite.getTurn() || playerBlack.getTurn()){
+
+                System.out.println("\nSkriv in vad du vill flytta: enligt: " + "x,y");
+
+                if (playerWhite.getTurn()){
+                    System.out.println("PlayerWhite det är din tur");
+
+                    if(scanner.hasNext("exit")){
+                        System.out.println("closed");
+                        break;
+                    }
+
+                    String inputMove = scanner.nextLine();
+                    String[] positions = inputMove.split(",");
+
+                    startSquare = Integer.parseInt(positions[0]);
+                    MvToSquare = Integer.parseInt(positions[1]);
+
+                    playerWhite.move(startSquare,MvToSquare);
+
+                    board.printEverything();
+
+                }else{
+                    System.out.println("PlayerBlack det är din tur");
+
+                    if(scanner.hasNext("exit")){
+                        System.out.println("closed");
+                        break;
+                    }
+
+                    String inputMove = scanner.nextLine();
+                    String[] positions = inputMove.split(",");
+
+                    startSquare = Integer.parseInt(positions[0]);
+                    MvToSquare = Integer.parseInt(positions[1]);
+
+                    playerBlack.move(startSquare, MvToSquare);
+
+                    board.printEverything();
+                }
 			}		
 		}
 }

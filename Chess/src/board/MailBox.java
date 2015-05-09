@@ -211,8 +211,8 @@ public class MailBox {
 //					System.out.printf("%2d,", squares[i].getValueNbr()); //dåligt namn
 					
 				}else {	//----Skriver ut pjäsernas värde som står på de lagliga rutorna--------
-					
-					System.out.printf("%2d,", squares[i].getPiece().getPieceType().getPieceValue());//skrivet ut pjäsernas värde
+                   	char colorFirstLetter = squares[i].getPiece().getColor().name().charAt(0);
+					System.out.printf("%2s,", squares[i].getPiece().getPieceType().getPieceValue() +""+ colorFirstLetter );//skrivet ut pjäsernas värde
 //					System.out.printf("%2d,", squares[i].getValueNbr());// skriver ut rutornas mailboxNbr
 				}			
 
