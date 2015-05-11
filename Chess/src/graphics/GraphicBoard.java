@@ -19,6 +19,7 @@ import piece.PieceType;
 public class GraphicBoard {
 	private GraphicSquare[][] squares = new GraphicSquare[8][8];
 	private GraphicSquare temp;
+	private Color oldSquareColor;
 	private JPanel mainPanel = new JPanel(new BorderLayout());
 	private JPanel menuBar = new JPanel(new BorderLayout());
 	private JPanel boardPanel;
@@ -61,22 +62,21 @@ public class GraphicBoard {
 				
 				if (s.getValue() >= 0) {
 
-					s.addMouseListener(new MouseAdapter() {
+					s.addMouseListener(new MouseAdapter() { 
 						
 						public void mousePressed(MouseEvent e) {
 						
 							if (s.getPiece().getPieceType() != PieceType.EMPTY) {
 								controller.movePiece(s.getValue());
 								temp = s;
+								// hämtar den gamla färgen på rutan
+								oldSquareColor = s.getBackground(); 
 								temp.setBackground(Color.GREEN);
-								
 							} else {
 								controller.movePiece(s.getValue());
-								temp.setBackground(s.getBackground());
-							}
-
+								temp.setBackground(oldSquareColor);
+							}							
 						}
-
 					});
 				}
 			
