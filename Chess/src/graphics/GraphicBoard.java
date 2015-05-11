@@ -2,11 +2,14 @@ package graphics;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyledDocument;
+
+import piece.PieceType;
 
 /**
  * Visuellt bräde och menybar
@@ -15,6 +18,7 @@ import javax.swing.text.StyledDocument;
  */
 public class GraphicBoard {
 	private GraphicSquare[][] squares = new GraphicSquare[8][8];
+	private GraphicSquare temp;
 	private JPanel mainPanel = new JPanel(new BorderLayout());
 	private JPanel menuBar = new JPanel(new BorderLayout());
 	private JPanel boardPanel;
@@ -58,13 +62,21 @@ public class GraphicBoard {
 				if (s.getValue() >= 0) {
 
 					s.addMouseListener(new MouseAdapter() {
-
+						
 						public void mousePressed(MouseEvent e) {
-							if (s.getPiece() != null) {
+						
+							if (s.getPiece().getPieceType() != PieceType.EMPTY) {
 								controller.movePiece(s.getValue());
-						//		s.setBackground(Color.GREEN);
+								temp = s;
+								temp.setBackground(Color.GREEN);
+								
+							} else {
+								controller.movePiece(s.getValue());
+								temp.setBackground(s.getBackground());
 							}
+
 						}
+
 					});
 				}
 			
@@ -113,11 +125,10 @@ public class GraphicBoard {
 		});
 				
 		infoPnl.setPreferredSize(new Dimension(200,400));
-		txtPane.setPreferredSize(new Dimension(190,400));
+		txtPane.setPreferredSize(new Dimension(190,300));
 		txtPane.setEditable(false);
 		txtPane.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		scroll.setAutoscrolls(true);
-		infoPnl.add(scroll);		
+		infoPnl.add(scroll);
 		
 		menuBar.add(reset, BorderLayout.SOUTH);
 		menuBar.add(newGame, BorderLayout.NORTH);
