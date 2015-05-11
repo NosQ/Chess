@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import board.Board;
 import board.ChessColor;
+import board.Player;
 /*
  * Kommentar
  */
@@ -17,8 +18,12 @@ public class GraphicController {
 	private int moveIndex;
 	private GraphicBoard viewer = new GraphicBoard(this);
 	private boolean moveable = true;
-	private boolean bturn = false;
-	private boolean wturn = true;
+	
+	Player playerWhite = chessB.getPlayer(ChessColor.WHITE);
+	Player playerBlack = chessB.getPlayer(ChessColor.BLACK);
+	private boolean bturn = playerBlack.getTurn();
+	private boolean wturn = playerWhite.getTurn();
+	
 	
 	public void movePiece(int ruta){
 		if(moveable) {	
@@ -31,7 +36,7 @@ public class GraphicController {
 			else if (move == 1) {
 				if (chessB.getSquare(moveIndex).getPiece().getColor() == ChessColor.BLACK && bturn == true) {
 					
-					if (chessB.movePiece(moveIndex, ruta) == false && bturn == true) {
+					if (chessB.movePiece(playerBlack.getColor(), moveIndex, ruta) == false && bturn == true) {
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
@@ -57,7 +62,7 @@ public class GraphicController {
 				} 
 				else if (chessB.getSquare(moveIndex).getPiece().getColor() == ChessColor.WHITE && wturn == true) {
 					
-					if (chessB.movePiece(moveIndex, ruta) == false && wturn == true) {
+					if (chessB.movePiece(playerWhite.getColor(), moveIndex, ruta) == false && wturn == true) {
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
