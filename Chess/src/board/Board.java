@@ -22,8 +22,8 @@ public class Board {
 		blackDefenceBoard = new DefenceBoard(ChessColor.BLACK, this);		
 		updateAttackBoards();	
 		
-		playerWhite = new Player("Kalle", ChessColor.WHITE, this);
-		playerBlack = new Player("Inga", ChessColor.BLACK, this);
+		playerWhite = new Player("White", ChessColor.WHITE, this);
+		playerBlack = new Player("Black", ChessColor.BLACK, this);
 	//	printAttackBoards();
 	}	
 	
@@ -68,12 +68,22 @@ public class Board {
 			getDefenceBoard(color).generateEscapeSquares();
 			getDefenceBoard(color).printEscapeSquares();
 			
-			if(getDefenceBoard(color).isEmpty()){						
+			if(getDefenceBoard(color).isEmpty() && color == ChessColor.BLACK){						
 				System.out.println("GAME OVER BITCH, " + color.name() + " lost!");				
 				setBMate(true);
 				
-				return true;				
-			}else{
+				return true;
+				
+				
+			}
+			
+			if(getDefenceBoard(color).isEmpty() && color == ChessColor.WHITE) {
+				System.out.println("GAME OVER BITCH, " + color.name() + " lost!");				
+				setWMate(true);
+				
+				return true;
+			}
+			else{
 				System.out.println("Kung " + color.name() + " är inte i schack matt ");				
 			}					
 		}		
@@ -110,7 +120,7 @@ public class Board {
                     System.out.println(color.name() + " Won!");
                     getPlayer(color).setTurn(false);
                     getPlayer( getOppositeColor(color) ).setTurn(false);
-                    System.exit(0);
+                    
                 }
 
 				System.out.println("Giltligt drag");
@@ -129,34 +139,6 @@ public class Board {
             return false;
         }
 	}
-    //-----------Move and Check-logic------------
-    public boolean movePiece(int startSquare, int endSquare){
-
-        Piece piece = getSquare(startSquare).getPiece();
-
-        if(piece.movement(endSquare)){
-
-            getSquare(endSquare).setPiece(getSquare(startSquare).getPiece());
-            getSquare(startSquare).setPiece(mailbox.getEmptyPiece());
-            piece.setSquare(getSquare(endSquare));
-
-            getSquare(startSquare).setOccupied(false);
-            getSquare(endSquare).setOccupied(true);
-
-            updateAttackBoards();
-//				printAttackBoards();
-
-            InCheckMate(ChessColor.WHITE);
-            InCheckMate(ChessColor.BLACK);
-
-            System.out.println("Giltligt drag");
-            return true;
-        }
-        else{
-            System.out.println("Ogiltligt drag");
-            return false;
-        }
-    }
 	
 	public void updateAttackBoards(){
 		whiteAttckBoard.updateAttackSquares();

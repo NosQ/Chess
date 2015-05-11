@@ -1,17 +1,13 @@
 package graphics;
+
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyledDocument;
 
-import piece.Piece;
-import piece.PieceType;
-import piece.pieces.EmptyPiece;
-import square.Square;
 /**
  * Visuellt bräde och menybar
  * @author Daniel
@@ -25,7 +21,7 @@ public class GraphicBoard {
 	private JPanel infoPnl = new JPanel();
 	private StyledDocument	document = new DefaultStyledDocument();
 	private JTextPane txtPane = new JTextPane(document);
-	private JScrollPane scroll = new JScrollPane(txtPane, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	private JScrollPane scroll = new JScrollPane(txtPane);
 	private GraphicController controller;
 	private JFrame frame = new JFrame("Testar");
 	
@@ -55,7 +51,7 @@ public class GraphicBoard {
 					
 				} else {
 					
-					s.setBackground(Color.RED);
+					s.setBackground(Color.BLUE);
 					s.setPiece(controller.getBoard().getSquare(value).getPiece());
 				}
 				

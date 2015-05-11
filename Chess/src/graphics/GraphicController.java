@@ -1,10 +1,6 @@
 package graphics;
 
-import java.awt.Color;
-
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import board.Board;
 import board.ChessColor;
 import board.Player;
@@ -18,12 +14,18 @@ public class GraphicController {
 	private int moveIndex;
 	private GraphicBoard viewer = new GraphicBoard(this);
 	private boolean moveable = true;
-	
-	Player playerWhite = chessB.getPlayer(ChessColor.WHITE);
-	Player playerBlack = chessB.getPlayer(ChessColor.BLACK);
+
+	private Player playerWhite = chessB.getPlayer(ChessColor.WHITE);
+	private Player playerBlack = chessB.getPlayer(ChessColor.BLACK);
 	private boolean bturn = playerBlack.getTurn();
 	private boolean wturn = playerWhite.getTurn();
 	
+	
+	public GraphicController() {
+		
+		playerBlack.setTurn(false);
+		
+	}
 	
 	public void movePiece(int ruta){
 		if(moveable) {	
