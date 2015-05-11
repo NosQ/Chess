@@ -18,8 +18,6 @@ import piece.PieceType;
  */
 public class GraphicBoard {
 	private GraphicSquare[][] squares = new GraphicSquare[8][8];
-	private GraphicSquare temp;
-	private Color oldSquareColor;
 	private JPanel mainPanel = new JPanel(new BorderLayout());
 	private JPanel menuBar = new JPanel(new BorderLayout());
 	private JPanel boardPanel;
@@ -29,6 +27,10 @@ public class GraphicBoard {
 	private JScrollPane scroll = new JScrollPane(txtPane);
 	private GraphicController controller;
 	private JFrame frame = new JFrame("Testar");
+	
+	//------Varibler som håller "gammal" informaion om rutan-----
+	private GraphicSquare temp;
+	private Color oldSquareColor;
 	
 	public GraphicBoard(GraphicController controller) {
 		this.controller = controller;
@@ -75,7 +77,8 @@ public class GraphicBoard {
 							} else {
 								controller.movePiece(s.getValue());
 								temp.setBackground(oldSquareColor);
-							}							
+							}
+					
 						}
 					});
 				}
