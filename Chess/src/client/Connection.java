@@ -100,8 +100,8 @@ public class Connection extends Observable {
         public void run() {
             try {
                 oos = new ObjectOutputStream(socket.getOutputStream());
-                //handshake, du talar om för den som är på andra sidan vem du är.
-                oos.writeObject(new Message(userName, userName, userName, 3));
+                //handshake, du talar om fï¿½r den som ï¿½r pï¿½ andra sidan vem du ï¿½r.
+                oos.writeObject(new Message(userName));
                 oos.flush();
                 System.out.println("Sender Started");
                 while (true) {
@@ -140,8 +140,8 @@ public class Connection extends Observable {
         public void run() {
             try {
                 ois = new ObjectInputStream(socket.getInputStream());
-                //handshake, när du mottar en uppkoppling, vem är på andra sidan?
-                connectedToUserName = ((Message) ois.readObject()).getMessage();
+                //handshake, nï¿½r du mottar en uppkoppling, vem ï¿½r pï¿½ andra sidan?
+                connectedToUserName = ((Message) ois.readObject()).getUserNameFrom();
                 while (true) {
                 	try{
                     Message receivedMessage = (Message) ois.readObject();

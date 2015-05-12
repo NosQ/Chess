@@ -32,9 +32,9 @@ public class Client implements Runnable, Observer {
         Message recieveMessage = connection.recieveMessage();
         
         if(recieveMessage.getType()==4){
-        		game.newGame(recieveMessage.getUserNameFrom());
+//        		game.newGame(recieveMessage.getUserNameFrom());
         	}
-        else if(recieveMessage.getType()==0){
+        else if(recieveMessage.getType()==1){
         	game.movePiece(recieveMessage.getRuta1());
         	game.movePiece(recieveMessage.getRuta2());
 

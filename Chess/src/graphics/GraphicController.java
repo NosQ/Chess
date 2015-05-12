@@ -1,6 +1,8 @@
 package graphics;
+import client.*;
 
 import javax.swing.JOptionPane;
+
 import board.Board;
 import board.ChessColor;
 import board.Player;
@@ -14,6 +16,7 @@ public class GraphicController {
 	private int moveIndex;
 	private GraphicBoard viewer = new GraphicBoard(this);
 	private boolean moveable = true;
+	
 
 	private Player playerWhite = chessB.getPlayer(ChessColor.WHITE);
 	private Player playerBlack = chessB.getPlayer(ChessColor.BLACK);

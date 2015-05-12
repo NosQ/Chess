@@ -2,6 +2,8 @@ package graphics;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -9,6 +11,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyledDocument;
 
+import client.Client;
+import client.Connection;
+import client.Message;
 import piece.PieceType;
 
 /**
@@ -16,7 +21,8 @@ import piece.PieceType;
  * @author Daniel
  *
  */
-public class GraphicBoard {
+public class GraphicBoard implements ActionListener {
+	private Client client;
 	private GraphicSquare[][] squares = new GraphicSquare[8][8];
 	private JPanel mainPanel = new JPanel(new BorderLayout());
 	private JPanel menuBar = new JPanel(new BorderLayout());
@@ -29,6 +35,11 @@ public class GraphicBoard {
 	private JScrollPane scroll = new JScrollPane(txtPane);
 	private GraphicController controller;
 	private JFrame frame = new JFrame("Testar");
+	private JTextField loginField = new JTextField();
+	private JTextField connectField = new JTextField();
+	private JButton connectButton = new JButton("Connect");
+	private int move = 0;
+	private int moveIndex = 0;
 	
 	//------Varibler som håller "gammal" informaion om rutan-----
 	private GraphicSquare temp;
@@ -36,6 +47,7 @@ public class GraphicBoard {
 	
 	public GraphicBoard(GraphicController controller) {
 		this.controller = controller;
+		connectButton.addActionListener(this); 
 		initializeGui();
 	}
 	
@@ -76,9 +88,26 @@ public class GraphicBoard {
 								// hämtar den gamla färgen på rutan
 								oldSquareColor = s.getBackground(); 
 								temp.setBackground(Color.GREEN);
+								if(move==0){
+									moveIndex = s.getValue();
+									move++;
+								}
+									else if(move==1){
+										client.addToBuffer(new Message(getUser(), getOpponent(), moveIndex, s.getValue(),1));
+										move = 0;
+									}
+								
 							} else {
 								controller.movePiece(s.getValue());
 								temp.setBackground(oldSquareColor);
+								if(move==0){
+									moveIndex = s.getValue();
+									move++;
+								}
+									else if(move==1){
+										client.addToBuffer(new Message(getUser(), getOpponent(), moveIndex, s.getValue(),1));
+										move = 0;
+									}
 							}
 					
 						}
@@ -137,21 +166,14 @@ public class GraphicBoard {
 		infoPnl.add(scroll);
 		
 		//------logIn panel--------
-		JButton connectButton = new JButton("Connect");
 		
-		connectButton.addActionListener(new ActionListener() {
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setInfoText("Att connecta går ej än\n");
-				
-			}
-		});
+	
+		
+	
 		
 		connectButton.setPreferredSize(new Dimension(190,300));
 	
-		JTextField loginField = new JTextField();
-		JTextField connectField = new JTextField();
 		connectField.setPreferredSize(new Dimension(190,30));
 		loginField.setPreferredSize(new Dimension(190, 30));
 		loginPanel.add(loginField);
@@ -192,7 +214,19 @@ public class GraphicBoard {
 			}
 		}		
 	}
-	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==connectButton){
+	    	int port = 6000;
+	    	try {
+				Client client = new Client(new Connection(getUser(), InetAddress.getByName("localhost"), port), getUser(), controller);
+				this.client = client;
+				new Thread(client).start();
+			} catch (UnknownHostException c) {
+				c.printStackTrace();
+			}
+		}
+		
+	}
 	public void setInfoText(String info) {
 		
 		try {
@@ -214,6 +248,12 @@ public class GraphicBoard {
 		frame.pack();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	public String getUser(){
+		return loginField.getText();
+	}
+	public String getOpponent(){
+		return connectField.getText();
 	}
 	
 }

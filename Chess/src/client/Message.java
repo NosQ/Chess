@@ -44,6 +44,11 @@ public final class Message implements Serializable{
     	this.userNameFrom = null;
     	this.userNameTo = null;
     }
+    public Message(String user){
+    	userNameTo = null;
+    	userNameFrom = user;
+    	type = 3;
+    }
 /**
  * 
  * @return user name from text comes in 
@@ -77,4 +82,5 @@ public final class Message implements Serializable{
 	public void setRuta1(int ruta1) {
 		this.ruta1 = ruta1;
 	}
+
 }
