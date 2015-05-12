@@ -22,6 +22,8 @@ public class GraphicBoard {
 	private JPanel menuBar = new JPanel(new BorderLayout());
 	private JPanel boardPanel;
 	private JPanel infoPnl = new JPanel();
+	private JPanel loginPanel = new JPanel();
+	private JPanel txtPanels = new JPanel(new GridLayout(0, 1));
 	private StyledDocument	document = new DefaultStyledDocument();
 	private JTextPane txtPane = new JTextPane(document);
 	private JScrollPane scroll = new JScrollPane(txtPane);
@@ -128,14 +130,42 @@ public class GraphicBoard {
 		});
 				
 		infoPnl.setPreferredSize(new Dimension(200,400));
-		txtPane.setPreferredSize(new Dimension(190,300));
+		scroll.setPreferredSize(new Dimension(190,300));
+		txtPanels.setPreferredSize(new Dimension(200,200));
 		txtPane.setEditable(false);
 		txtPane.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		infoPnl.add(scroll);
 		
+		//------logIn panel--------
+		JButton connectButton = new JButton("Connect");
+		
+		connectButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setInfoText("Att connecta går ej än\n");
+				
+			}
+		});
+		
+		connectButton.setPreferredSize(new Dimension(190,300));
+	
+		JTextField loginField = new JTextField();
+		JTextField connectField = new JTextField();
+		connectField.setPreferredSize(new Dimension(190,30));
+		loginField.setPreferredSize(new Dimension(190, 30));
+		loginPanel.add(loginField);
+		loginPanel.add(connectField);
+		txtPanels.add(loginPanel);
+		txtPanels.add(connectButton);
+		
+		txtPanels.add(scroll);
+		
+		
 		menuBar.add(reset, BorderLayout.SOUTH);
 		menuBar.add(newGame, BorderLayout.NORTH);
-		menuBar.add(infoPnl, BorderLayout.CENTER);
+		menuBar.add(txtPanels, BorderLayout.CENTER);
+		
 		
 		
 		mainPanel.add(boardPanel, BorderLayout.CENTER);
