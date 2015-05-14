@@ -34,10 +34,14 @@ public class GraphicBoard implements ActionListener {
 	private JTextPane txtPane = new JTextPane(document);
 	private JScrollPane scroll = new JScrollPane(txtPane);
 	private GraphicController controller;
-	private JFrame frame = new JFrame("Testar");
+	private JFrame frame = new JFrame("Networkedbased chess");
 	private JTextField loginField = new JTextField();
 	private JTextField connectField = new JTextField();
 	private JButton connectButton = new JButton("Connect");
+	private JButton disconnectButton = new JButton("Disconnect");
+	private JLabel userName = new JLabel("Username");
+	private JLabel opponent = new JLabel("Opponent");
+	private JButton newGame = new JButton("New game");
 	private int move = 0;
 	private int moveIndex = 0;
 	
@@ -47,7 +51,9 @@ public class GraphicBoard implements ActionListener {
 	
 	public GraphicBoard(GraphicController controller) {
 		this.controller = controller;
-		connectButton.addActionListener(this); 
+		connectButton.addActionListener(this);
+		disconnectButton.addActionListener(this);
+		newGame.addActionListener(this);
 		initializeGui();
 	}
 	
@@ -132,19 +138,9 @@ public class GraphicBoard implements ActionListener {
 		
 		//--------Skapar en menubar-----------
 		
-		JButton newGame = new JButton("New game");
+
 		JButton reset = new JButton("Reset move");
-		
-		newGame.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				boolean yes = JOptionPane.showConfirmDialog(null, "Vill du starta nytt spel?", "Nytt spel", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-				if (yes) {
-					setInfoText("Denna funktion finns ej än\n");
-				}
-			}
-		});
+
 		
 		reset.addActionListener(new ActionListener() {
 			
@@ -172,14 +168,18 @@ public class GraphicBoard implements ActionListener {
 		
 	
 		
-		connectButton.setPreferredSize(new Dimension(190,300));
+		connectButton.setPreferredSize(new Dimension(190,40));
+		disconnectButton.setPreferredSize(new Dimension(190,40));
 	
 		connectField.setPreferredSize(new Dimension(190,30));
 		loginField.setPreferredSize(new Dimension(190, 30));
+		loginPanel.add(userName);
 		loginPanel.add(loginField);
+		loginPanel.add(opponent);
 		loginPanel.add(connectField);
+		loginPanel.add(connectButton);
+		loginPanel.add(disconnectButton);
 		txtPanels.add(loginPanel);
-		txtPanels.add(connectButton);
 		
 		txtPanels.add(scroll);
 		
@@ -225,8 +225,21 @@ public class GraphicBoard implements ActionListener {
 				c.printStackTrace();
 			}
 		}
+		if(e.getSource()==disconnectButton){
+			client.addToBuffer(new Message(getUser(), getUser(),2));
+		}
+		if(e.getSource()==newGame){
+			boolean yes = JOptionPane.showConfirmDialog(null, "Vill du starta nytt spel?", "Nytt spel", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+			if (yes) {
+				controller = new GraphicController();
+				initializeGui();
+				controller.setGraphicBoard(this);
+				updateDisplay();
+			}
+		}
 		
 	}
+	
 	public void setInfoText(String info) {
 		
 		try {
