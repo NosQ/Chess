@@ -46,8 +46,7 @@ public class GraphicBoard implements ActionListener {
 	private int moveIndex = 0;
 	
 	//------Varibler som håller "gammal" informaion om rutan-----
-	private GraphicSquare temp;
-	private Color oldSquareColor;
+
 	
 	public GraphicBoard(GraphicController controller) {
 		this.controller = controller;
@@ -90,10 +89,10 @@ public class GraphicBoard implements ActionListener {
 						
 							if (s.getPiece().getPieceType() != PieceType.EMPTY) {
 								controller.movePiece(s.getValue());
-								temp = s;
+								
 								// hämtar den gamla färgen på rutan
-								oldSquareColor = s.getBackground(); 
-								temp.setBackground(Color.GREEN);
+								
+								
 								if(move==0){
 									moveIndex = s.getValue();
 									move++;
@@ -105,7 +104,7 @@ public class GraphicBoard implements ActionListener {
 								
 							} else {
 								controller.movePiece(s.getValue());
-								temp.setBackground(oldSquareColor);
+								
 								if(move==0){
 									moveIndex = s.getValue();
 									move++;
@@ -218,7 +217,7 @@ public class GraphicBoard implements ActionListener {
 		if(e.getSource()==connectButton){
 	    	int port = 6000;
 	    	try {
-				Client client = new Client(new Connection(getUser(), InetAddress.getByName("localhost"), port), getUser(), controller);
+				Client client = new Client(new Connection(getUser(), InetAddress.getByName("192.168.0.128"), port), getUser(), controller);
 				this.client = client;
 				new Thread(client).start();
 			} catch (UnknownHostException c) {
