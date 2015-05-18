@@ -19,6 +19,7 @@ import java.util.Observer;
 public class Server implements Runnable, Observer {
 	private ServerSocket serverSocket;
     private static LinkedList<Connection> connections;
+    private String usersOnline = "";
 
     /**
      * Constructor
@@ -46,7 +47,7 @@ public class Server implements Runnable, Observer {
             connections.add(thisThreadsConnection);
             System.out.println("Number of connected clients: " + connections.size());
     		String z = thisThreadsConnection.getConnectedToUserName() + " has connected.";
-    		
+    		sendUsersOnlineList();
             
 
         } catch (IOException e) {
@@ -58,6 +59,37 @@ public class Server implements Runnable, Observer {
         }
     }
 
+    private void sendUsersOnlineList() {
+		// Wait for the server to update the connections.
+		// If no wait, the last connected client will not be listed. 
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		usersOnline ="";
+		String[] usersOnlines = usersOnline.split(";");
+		for(Connection connection : connections){
+			for (String user : usersOnlines){
+				if(!user.equals(connection.getConnectedToUserName())) {
+					usersOnline += connection.getConnectedToUserName() + ";";
+				    System.out.println(usersOnline);
+				    System.out.println("Added a user: " + connection.getConnectedToUserName() );
+				}else{
+				    System.out.println("User already exists");
+				   }
+			}
+		}
+		System.out.println(usersOnline);
+        Message msg = new Message(usersOnline, 3);
+		sendMessageToAllConnections(msg);
+    }
+	private void sendMessageToAllConnections(Message message) {
+	       for(Connection connection : connections) {
+	           connection.sendMessage(message);
+	        }
+	        System.out.println("Status: Sent Message to All Clients");
+	    }
 
     /**
      * Creates a new thread waiting for the next user to connect 
@@ -92,10 +124,8 @@ public class Server implements Runnable, Observer {
                 if(message.getType()==2){
                 	for (int i = 0; i<connections.size(); i++){
                 		if(connections.get(i).getConnectedToUserName().equals(message.getUserNameFrom())){
-                			System.out.println(message.getUserNameFrom()+" has disconnected");
-                			             			
+                			System.out.println(message.getUserNameFrom()+" has disconnected");    			
                 			connections.remove(i);
-     
                 			System.out.println(connections.size()+ " users connected");
                 		}
                 	}
@@ -105,10 +135,9 @@ public class Server implements Runnable, Observer {
                     for (Connection connectionToSendTo : connections) {
                         if (connectionToSendTo.getConnectedToUserName().equals(message.getUserNameTo())) {
                             connectionToSendTo.sendMessage(message);
-                           
                         	}
                         else{
-                        	System.out.println("User not online");
+                        	System.out.println("User not online: "+ message.getUserNameTo());
                         }
                         	
                         }

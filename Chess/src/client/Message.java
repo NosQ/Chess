@@ -15,8 +15,9 @@ public final class Message implements Serializable{
     private final String userNameTo;
     private int ruta1 = 0;
     private int ruta2 = 0;
-    static final int WHOISIN = 0, MESSAGE = 1, LOGOUT = 2, LOGIN = 3, NEWGAME = 4;
+    static final int WHOISIN = 0, MESSAGE = 1, LOGOUT = 2, LOGIN = 3, NEWGAME = 4, ACCEPT = 5, DENIED = 6;
     private final int type;
+    private String users;
 
     /**
      * Constructor
@@ -49,6 +50,12 @@ public final class Message implements Serializable{
     	userNameFrom = user;
     	type = 3;
     }
+   public Message(String users, int type){
+	   this.setUsers(users);
+	   this.type = type;
+	   userNameFrom = null;
+	   userNameTo = null;
+   }
 /**
  * 
  * @return user name from text comes in 
@@ -57,10 +64,6 @@ public final class Message implements Serializable{
         return userNameFrom;
     }
 
-    /**
-     * 
-     * @return username to which text goes
-     */
     public String getUserNameTo() {
         return userNameTo;
     }
@@ -81,6 +84,12 @@ public final class Message implements Serializable{
 	}
 	public void setRuta1(int ruta1) {
 		this.ruta1 = ruta1;
+	}
+	public String getUsers() {
+		return users;
+	}
+	public void setUsers(String users) {
+		this.users = users;
 	}
 
 }

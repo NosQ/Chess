@@ -1,11 +1,15 @@
 package client;
 
 import java.net.InetAddress;
+
 import graphics.*;
+
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.JOptionPane;
 
 
 public class Client implements Runnable, Observer {
@@ -13,14 +17,15 @@ public class Client implements Runnable, Observer {
     private final String userName;
     private LinkedList<Message> message = new LinkedList<Message>();
     private GraphicController game;
+    private LoginFrame login;
     
  
-    public Client(Connection connection, String userName, GraphicController game) throws UnknownHostException {
-    	this.game = game;
+    public Client(Connection connection, String userName, LoginFrame frame) throws UnknownHostException {
         this.connection = connection;
         this.userName = userName;
         connection.openConnection(null);
         connection.addObserver(this);
+        login = frame;
 
     }
 
@@ -32,14 +37,24 @@ public class Client implements Runnable, Observer {
         Message recieveMessage = connection.recieveMessage();
         
         if(recieveMessage.getType()==4){
-//        		game.newGame(recieveMessage.getUserNameFrom());
+        		System.out.println("recieved challenge");
+        		login.acceptChallenge(recieveMessage);
         	}
         else if(recieveMessage.getType()==1){
-        	game.movePiece(recieveMessage.getRuta1());
-        	game.movePiece(recieveMessage.getRuta2());
+        	game.movePiece(recieveMessage.getRuta1(), recieveMessage.getUserNameFrom());
+        	game.movePiece(recieveMessage.getRuta2(), recieveMessage.getUserNameFrom());
 
         }
-        
+        else if(recieveMessage.getType()==3){
+        	login.setUsersOnline(recieveMessage.getUsers());
+        }
+        else if(recieveMessage.getType()==5){
+        	login.startGame(recieveMessage.getUserNameFrom());
+        }
+        else if(recieveMessage.getType()==6){
+        	JOptionPane.showMessageDialog(null, "Challenge denied from: "+ recieveMessage.getUserNameFrom());
+        }
+     
         
 
 		
@@ -57,6 +72,9 @@ public class Client implements Runnable, Observer {
      */
     public void socketClose(){
     	connection.socketClose();
+    }
+    public void setController(GraphicController controller){
+    	game = controller;
     }
     
     /**
