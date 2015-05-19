@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
@@ -27,7 +28,7 @@ public class LoginFrame implements ActionListener {
 	private JLabel opponent = new JLabel("Opponent");
 	private JButton newGame = new JButton("New game");
 	private JButton challenge = new JButton("Challenge");
-	private JTextField usersOnline = new JTextField();
+	private TextArea usersOnline = new TextArea();
 	private JFrame cFrame = new JFrame("challenge opponent");
 	private JPanel cPanel = new JPanel();
 	private JButton sendChallenge = new JButton("Send challenge");
@@ -118,7 +119,7 @@ public class LoginFrame implements ActionListener {
 	}
 	
 	public void setUsersOnline(String usersOnlineIn){
-		String usersOnlineToTextArea = "--Users--";
+		String usersOnlineToTextArea = "-----Users-----";
 	try{
 		if (usersOnlineIn != null){
 			usersOnline.setText(null);
@@ -168,6 +169,7 @@ public class LoginFrame implements ActionListener {
 		LoginFrame lg = new LoginFrame();
 		lg.startUi();
 
+		
 		
 	}
 

@@ -65,6 +65,7 @@ public class Client implements Runnable, Observer {
  */ 
     public void addToBuffer(Message message){
     	this.message.addFirst(message);
+    	System.out.println("skickat drag");
     }
     
     /**

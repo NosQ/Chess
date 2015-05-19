@@ -25,8 +25,6 @@ public class GraphicController {
 	private boolean wturn = playerWhite.getTurn();
 	private String whitePlayer;
 	private String blackPlayer;
-	private boolean white = false;
-	private boolean black = false;
 	
 	public GraphicController(String player1, String player2) {
 		this.whitePlayer = player1;
@@ -129,11 +127,9 @@ public class GraphicController {
 		return blackPlayer;
 	}
 	public void setWhitePlayer(){
-		white = true;
 		viewer.setWhitePlayer();
 	}
 	public void setBlackPlayer(){
-		black = true;
 		viewer.setBlackPlayer();
 	}
 

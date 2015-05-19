@@ -83,27 +83,27 @@ public class GraphicBoard{
 						public void mousePressed(MouseEvent e) {
 
 							if (s.getPiece().getPieceType() != PieceType.EMPTY) {
-								if(s.getPiece().getColor()==ChessColor.WHITE && whitePlayer == true){
-									controller.movePiece(s.getValue(), controller.whitePlayer());
-									if(move==0){
-										moveIndex = s.getValue();
-										move++;
-										setTempPiece(s.getPiece());
+									if(s.getPiece().getColor()==ChessColor.WHITE && whitePlayer == true){
+										if(move==0){
+											controller.movePiece(s.getValue(), controller.whitePlayer());
+											moveIndex = s.getValue();
+											move++;
+											setTempPiece(s.getPiece());
+									}
 									}
 
 									else if(move==1 && whitePlayer==true){
+										controller.movePiece(s.getValue(), controller.whitePlayer());
 										client.addToBuffer(new Message(controller.whitePlayer(), controller.blackPlayer(), moveIndex, s.getValue(),1));
 										move = 0;
 									}
-								}
-
-								else if(s.getPiece().getColor()==ChessColor.BLACK && blackPlayer == true){
-									controller.movePiece(s.getValue(), controller.blackPlayer());
-
-									if(move==0){
-										moveIndex = s.getValue();
-										move++;
-										setTempPiece(s.getPiece());
+								
+									else if(s.getPiece().getColor()==ChessColor.BLACK && blackPlayer == true){
+										if(move==0){
+											controller.movePiece(s.getValue(), controller.blackPlayer());
+											moveIndex = s.getValue();
+											move++;
+											setTempPiece(s.getPiece());
 									}
 									else if(move==1 && blackPlayer==true){
 										client.addToBuffer(new Message(controller.blackPlayer(), controller.whitePlayer(), moveIndex, s.getValue(),1));
@@ -111,36 +111,46 @@ public class GraphicBoard{
 									}
 
 								}
+									else{
+										setInfoText("inte dina pjäser");
+									}
 							}
 
-								else{	
+								else {
+									if(tempPiece !=null){
 									if(tempPiece.getColor()==ChessColor.WHITE && whitePlayer==true){
-										controller.movePiece(s.getValue(), controller.whitePlayer());
 
 										if(move==0){
+											controller.movePiece(s.getValue(), controller.whitePlayer());
 											moveIndex = s.getValue();
 											move++;
 										}
 										else if(move==1){
+											controller.movePiece(s.getValue(), controller.whitePlayer());
 											client.addToBuffer(new Message(controller.whitePlayer(), controller.blackPlayer(), moveIndex, s.getValue(),1));
 											move = 0;
 										}
 
 									}
 									else if(tempPiece.getColor()==ChessColor.BLACK && blackPlayer==true){
-										controller.movePiece(s.getValue(), controller.blackPlayer());
 
 										if(move==0){
+											controller.movePiece(s.getValue(), controller.blackPlayer());
 											moveIndex = s.getValue();
 											move++;
 										}
 										else if(move==1){
+											controller.movePiece(s.getValue(), controller.blackPlayer());
 											client.addToBuffer(new Message(controller.blackPlayer(), controller.whitePlayer(), moveIndex, s.getValue(),1));
 											move = 0;
 										}
 									}
 								}
+								else{
+									setInfoText("\n"+ "Inte dina pjäser");
+								}
 							}
+					}
 					}
 
 
