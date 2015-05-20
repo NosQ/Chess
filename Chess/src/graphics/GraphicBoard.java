@@ -104,15 +104,16 @@ public class GraphicBoard{
 											moveIndex = s.getValue();
 											move++;
 											setTempPiece(s.getPiece());
-									}
+									}}
 									else if(move==1 && blackPlayer==true){
+										controller.movePiece(s.getValue(), controller.blackPlayer());
 										client.addToBuffer(new Message(controller.blackPlayer(), controller.whitePlayer(), moveIndex, s.getValue(),1));
 										move = 0;
 									}
 
-								}
+								
 									else{
-										setInfoText("inte dina pjäser");
+										setInfoText("inte dina pjï¿½ser");
 									}
 							}
 
@@ -147,7 +148,7 @@ public class GraphicBoard{
 									}
 								}
 								else{
-									setInfoText("\n"+ "Inte dina pjäser");
+									setInfoText("\n"+ "Inte dina pjï¿½ser");
 								}
 							}
 					}
@@ -212,9 +213,9 @@ public class GraphicBoard{
 			mainPanel.add(boardPanel, BorderLayout.CENTER);
 			mainPanel.add(menuBar, BorderLayout.EAST);
 
-			setInfoText(controller.blackPlayer() +" är svart");
+			setInfoText(controller.blackPlayer() +" ï¿½r svart");
 			setInfoText("\n");
-			setInfoText(controller.whitePlayer() +" är vit");
+			setInfoText(controller.whitePlayer() +" ï¿½r vit");
 
 
 		}
