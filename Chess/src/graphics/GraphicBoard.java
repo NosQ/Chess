@@ -48,7 +48,7 @@ public class GraphicBoard{
 	public GraphicBoard(GraphicController controller, Client client) {
 		this.controller = controller;
 		this.client = client;
-		frame = new JFrame("Nätverksbaserat schack" + client.getName());
+		frame = new JFrame("Nätverksbaserat schack " + client.getName());
 		initializeGui();
 	}
 
@@ -68,12 +68,12 @@ public class GraphicBoard{
 
 				if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
 
-					s.setBackground(Color.WHITE);
+					s.setBackground(new Color(255, 206, 158));
 					s.setPiece(controller.getBoard().getSquare(value).getPiece());
 
 				} else {
 
-					s.setBackground(Color.BLUE);
+					s.setBackground(new Color(209, 139, 71));
 					s.setPiece(controller.getBoard().getSquare(value).getPiece());
 				}
 
