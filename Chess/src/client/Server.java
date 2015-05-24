@@ -127,6 +127,7 @@ public class Server implements Runnable, Observer {
                 			System.out.println(message.getUserNameFrom()+" has disconnected");    			
                 			connections.remove(i);
                 			System.out.println(connections.size()+ " users connected");
+                			sendUsersOnlineList();
                 		}
                 	}
                 

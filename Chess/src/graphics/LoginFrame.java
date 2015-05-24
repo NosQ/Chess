@@ -110,6 +110,7 @@ public class LoginFrame implements ActionListener {
 		}
 		if(e.getSource()==disconnectButton){
 			klient.addToBuffer(new Message(loginField.getText(), loginField.getText(),2));
+			usersOnline.setText(null);
 		}
 		if(e.getSource()==sendChallenge){
 			klient.addToBuffer(new Message(player, connectField.getText(), 4));

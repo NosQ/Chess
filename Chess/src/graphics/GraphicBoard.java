@@ -118,8 +118,8 @@ public class GraphicBoard{
 							}
 
 								else {
-									if(tempPiece !=null){
-									if(tempPiece.getColor()==ChessColor.WHITE && whitePlayer==true){
+									
+									if(whitePlayer==true){
 
 										if(move==0){
 											controller.movePiece(s.getValue(), controller.whitePlayer());
@@ -133,7 +133,7 @@ public class GraphicBoard{
 										}
 
 									}
-									else if(tempPiece.getColor()==ChessColor.BLACK && blackPlayer==true){
+									else if(blackPlayer==true){
 
 										if(move==0){
 											controller.movePiece(s.getValue(), controller.blackPlayer());
@@ -146,7 +146,7 @@ public class GraphicBoard{
 											move = 0;
 										}
 									}
-								}
+								
 								else{
 									setInfoText("\n"+ "Inte dina pj�ser");
 								}
