@@ -35,7 +35,7 @@ public class GraphicBoard{
 	private JTextPane txtPane = new JTextPane(document);
 	private JScrollPane scroll = new JScrollPane(txtPane);
 	private GraphicController controller;
-	private JFrame frame = new JFrame("Networkedbased chess");
+	private JFrame frame;
 	private int move = 0;
 	private int moveIndex = 0;
 	private Piece tempPiece;
@@ -48,6 +48,7 @@ public class GraphicBoard{
 	public GraphicBoard(GraphicController controller, Client client) {
 		this.controller = controller;
 		this.client = client;
+		frame = new JFrame("Nätverksbaserat schack" + client.getName());
 		initializeGui();
 	}
 

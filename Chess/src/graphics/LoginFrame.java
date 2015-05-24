@@ -143,7 +143,7 @@ public class LoginFrame implements ActionListener {
 		usersOnline.setText(usersOnlineToTextArea);
 	}
 	public void acceptChallenge(Message message){
-		boolean yes = JOptionPane.showConfirmDialog(null, "Vill du acceptera spel från: "+ message.getUserNameFrom(), "Nytt spel", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+		boolean yes = JOptionPane.showConfirmDialog(null, "Vill du acceptera spel frï¿½n: "+ message.getUserNameFrom(), "Nytt spel", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 		if (yes) {
 			GraphicController control = new GraphicController(player, message.getUserNameFrom());
 			klient.addToBuffer(new Message(player, message.getUserNameFrom(), 5));
@@ -166,6 +166,9 @@ public class LoginFrame implements ActionListener {
 	public void setPlayer(String name){
 		player = name;
 	}
+	public String getPlayerName() {
+		return player;
+	}
 	public static void main(String[] args){
 		LoginFrame lg = new LoginFrame();
 		lg.startUi();
@@ -173,6 +176,9 @@ public class LoginFrame implements ActionListener {
 		
 		
 	}
+
+
+
 
 	
 

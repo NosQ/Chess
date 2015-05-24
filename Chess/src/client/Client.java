@@ -77,6 +77,10 @@ public class Client implements Runnable, Observer {
     public void setController(GraphicController controller){
     	game = controller;
     }
+    public String getName() {
+    	return login.getPlayerName();
+    }
+ 
     
     /**
      * ADD OBSERVER LATER instead of WHILE TRUE CHECK
