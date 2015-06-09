@@ -50,20 +50,20 @@ public class GraphicController {
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
 					} else {
-						viewer.setInfoText("Giltligt drag svart\n");
+						viewer.setInfoText("Giltligt drag svart");
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
-						viewer.setInfoText("\n" +blackPlayer+" skickat drag");
+						viewer.setInfoText("" +blackPlayer+" skickat drag");
 						
 						if(chessB.kingInCheck(ChessColor.WHITE) && !chessB.isWMate()) {
-							viewer.setInfoText("Vit kung i schack!\n");
+							viewer.setInfoText("Vit kung i schack!");
 						}
 						//kollar som svart är i matt
 						if(chessB.isWMate()){
 							moveable = false;
 							JOptionPane.showMessageDialog(null, "Schackmatt\nSvart vann!");
-							viewer.setInfoText("Spelet är slut\n");
+							viewer.setInfoText("Spelet är slut");
 						}
 						
 						setBTurn(false);
@@ -76,23 +76,23 @@ public class GraphicController {
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
-						viewer.setInfoText("\n" +whitePlayer+" skickat drag");
+						viewer.setInfoText("" +whitePlayer+" skickat drag");
 						
 					} else {
-						viewer.setInfoText("Giltligt drag vit\n");
+						viewer.setInfoText("Giltligt drag vit");
 						move = 0;
 						viewer.changePiece(moveIndex, ruta);
 						moveIndex = 0;
 						viewer.setInfoText(whitePlayer+" skickat drag");
 						
 						if(chessB.kingInCheck(ChessColor.BLACK) && !chessB.isBMate()) {
-							viewer.setInfoText("Svart kung i schack!\n");
+							viewer.setInfoText("Svart kung i schack!");
 						}
 						//kollar om vit är i matt
 						if (chessB.isBMate()) {
 							moveable = false;
 							JOptionPane.showMessageDialog(null, "Schackmatt\nVit vann!");
-							viewer.setInfoText("Spelet är slut\n");
+							viewer.setInfoText("Spelet är slut");
 						}
 						
 						setBTurn(true);

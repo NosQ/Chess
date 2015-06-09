@@ -149,7 +149,7 @@ public class GraphicBoard{
 									}
 								
 								else{
-									setInfoText("\n"+ "Inte dina pj�ser");
+									setInfoText("Inte dina pj�ser");
 								}
 							}
 					}
@@ -215,7 +215,6 @@ public class GraphicBoard{
 			mainPanel.add(menuBar, BorderLayout.EAST);
 
 			setInfoText(controller.blackPlayer() +" �r svart");
-			setInfoText("\n");
 			setInfoText(controller.whitePlayer() +" �r vit");
 
 
@@ -245,7 +244,7 @@ public class GraphicBoard{
 
 			try {
 
-				document.insertString(document.getLength(), info, null);
+				document.insertString(document.getLength(), "\n"+info, null);
 
 			} catch (BadLocationException e) {}
 
