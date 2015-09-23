@@ -64,6 +64,7 @@ public class GraphicController {
 							moveable = false;
 							JOptionPane.showMessageDialog(null, "Schackmatt\nSvart vann!");
 							viewer.setInfoText("Spelet är slut");
+							System.out.println("daniel är bäst");
 						}
 						
 						setBTurn(false);

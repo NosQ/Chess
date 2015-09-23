@@ -1,5 +1,10 @@
-/debugg/
+/.DS_Store
+/PiecePictures/
 /board/
-/square/
-/piece/
+/client/
+/debugg/
 /graphics/
+/piece/
+/server/
+/square/
+/startGame/
